@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku": "ng build && cd ./src/server && npm run heroku:build && npm run heroku:deploy"
   },
   "private": true,
   "dependencies": {

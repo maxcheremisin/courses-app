@@ -1,0 +1,16 @@
+{
+  "name": "angular-mentoring-heroku",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "start": "node server.js",
+    "heroku:build": "cp -a ../../dist/. ./dist/",
+    "heroku:deploy": "git add . && git commit -m 'update build' && git push https://git.heroku.com/angular-mentoring-course-app.git master --force"
+  },
+  "author": "",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "express": "4.15.4"
+  }
+}

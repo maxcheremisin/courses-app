@@ -7,7 +7,16 @@ import {courseList} from 'mocks/course-list.mock'
 export class CoursesService {
   constructor() {}
 
-  public async getCourses() {
-    return courseList
+  public async getCourses(query?: string) {
+    if (!query) {
+      return courseList
+    }
+
+    return courseList.filter(
+      course =>
+        course.caption.toLowerCase().includes(query.toLowerCase()) ||
+        (course.description && course.description.toLowerCase().includes(query.toLowerCase())) ||
+        (course.authors && course.authors.join().toLowerCase().includes(query.toLowerCase())),
+    )
   }
 }

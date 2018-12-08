@@ -1,5 +1,5 @@
 <div class="courses-list">
-  <span>There are 37 courses</span>
-  <app-course-item *ngFor='let course of courses' [courseItem]='course'></app-course-item>
+  <span>There are {{coursesList.length}} courses</span>
+  <app-course-item *ngFor='let course of coursesList' [courseItem]='course'></app-course-item>
   <div>courses list paginating</div>
 </div>

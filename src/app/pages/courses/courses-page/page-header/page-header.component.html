@@ -5,7 +5,13 @@
         Find or add Angular courses...
       </h1>
       <div class="page-header__control__elements">
-        <input type="text" />
+        <input
+          class="page-header__control__search-input"
+          title="Search course"
+          type="text"
+          (input)="onSearch($event.target.value)"
+          placeholder="Search by name, description or author"
+        />
         <button>+ Add course</button>
       </div>
     </div>

@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core'
+import {Component, Input, OnInit} from '@angular/core'
 import {CourseItem} from 'types/course-item.types'
-import {CoursesService} from '../../courses.service'
 
 @Component({
   selector: 'app-courses-list',
@@ -8,13 +7,10 @@ import {CoursesService} from '../../courses.service'
   templateUrl: './courses-list.component.html',
 })
 export class CoursesListComponent implements OnInit {
-  constructor(private courseService: CoursesService) {}
+  constructor() {}
 
-  public courses: CourseItem[]
+  @Input()
+  public coursesList: CourseItem[]
 
-  ngOnInit() {
-    this.courseService.getCourses().then(courses => {
-      this.courses = courses
-    })
-  }
+  ngOnInit() {}
 }

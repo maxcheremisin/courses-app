@@ -1,0 +1,29 @@
+@import 'common';
+@import 'mixins';
+@import 'fonts';
+
+.page-header {
+  .gradient-background();
+
+  &__content {
+    .page-size();
+  }
+
+  &__control {
+    display: flex;
+    flex-direction: column;
+    padding-top: 70px;
+    padding-bottom: 20px;
+
+    &__label {
+      color: @white;
+      font-family: @font-thin;
+      font-size: 2rem;
+      margin: 10px 0;
+    }
+
+    &__elements {
+      display: flex;
+    }
+  }
+}

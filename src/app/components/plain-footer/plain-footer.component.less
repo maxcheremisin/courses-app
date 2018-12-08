@@ -1,0 +1,19 @@
+@import 'common';
+@import 'fonts';
+@import 'mixins';
+
+.footer {
+  .fixed-bar();
+  bottom: 0;
+  text-align: right;
+  font-family: @font-thin;
+  color: @blue;
+
+  &__content {
+    .page-size();
+  }
+
+  &__text {
+    font-size: 1.4rem;
+  }
+}

@@ -16,7 +16,7 @@ deploy:
     - git push heroku master
     - echo "Deployed to staging server"
   environment:
-    name: staging
-    url: https://angular-mentoring-course-app.herokuapp.com/
+  name: staging
+  url: https://angular-mentoring-course-app.herokuapp.com/
   only:
     - master

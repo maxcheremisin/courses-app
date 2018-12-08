@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core'
 import {CourseItem} from 'types/course-item.types'
-import {courseList} from 'mocks/course-list.mock'
+import {CoursesService} from '../../courses.service'
 
 @Component({
   selector: 'app-courses-list',
@@ -8,9 +8,13 @@ import {courseList} from 'mocks/course-list.mock'
   templateUrl: './courses-list.component.html',
 })
 export class CoursesListComponent implements OnInit {
-  constructor() {}
+  constructor(private courseService: CoursesService) {}
 
-  public courses: CourseItem[] = courseList
+  public courses: CourseItem[]
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.courseService.getCourses().then(courses => {
+      this.courses = courses
+    })
+  }
 }

@@ -1,5 +1,5 @@
 <div class="courses-list">
-  <span>There are {{coursesList.length}} courses</span>
+  <span class="courses-list__total">There are {{coursesList.length}} courses</span>
   <app-course-item *ngFor='let course of coursesList' [courseItem]='course'></app-course-item>
   <div>courses list paginating</div>
 </div>

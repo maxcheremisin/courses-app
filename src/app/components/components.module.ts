@@ -4,11 +4,12 @@ import {LabelComponent} from './label/label.component'
 import {PlainFooterComponent} from './plain-footer/plain-footer.component'
 import {HeaderComponent} from './header/header.component'
 import {LogoComponent} from './logo/logo.component'
-import {RouterModule} from '@angular/router'
+import {RouterModule} from '@angular/router';
+import { IconComponent } from './icon/icon.component'
 
 @NgModule({
-  declarations: [LabelComponent, PlainFooterComponent, HeaderComponent, LogoComponent],
+  declarations: [LabelComponent, PlainFooterComponent, HeaderComponent, LogoComponent, IconComponent],
   imports: [CommonModule, RouterModule],
-  exports: [LabelComponent, PlainFooterComponent, HeaderComponent, LogoComponent],
+  exports: [LabelComponent, PlainFooterComponent, HeaderComponent, LogoComponent, IconComponent],
 })
 export class ComponentsModule {}

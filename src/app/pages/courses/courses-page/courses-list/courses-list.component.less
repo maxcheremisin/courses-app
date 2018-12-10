@@ -1,7 +1,17 @@
+@import 'common';
 @import 'mixins';
+@import 'fonts';
 
 .courses-list {
   .page-size();
 
   padding-bottom: 40px;
+  padding-top: 40px;
+
+  &__total {
+    margin-top: 20px;
+    font-family: @font-bold;
+    color: @grey-dark;
+    font-size: 1.4rem;
+  }
 }

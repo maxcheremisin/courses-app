@@ -2,6 +2,10 @@ body, h1, p {
   margin: 0;
 }
 
+body {
+  background-color: #e8eaef2e;
+}
+
 * {
   box-sizing: border-box;
   font-size: 10px;

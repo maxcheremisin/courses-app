@@ -1,2 +1,2 @@
-<app-page-header [onSearch]="onCourseSearch"></app-page-header>
+<app-page-header (onSearch)="onCourseSearch($event)"></app-page-header>
 <app-courses-list [coursesList]="courses"></app-courses-list>

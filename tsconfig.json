@@ -20,7 +20,8 @@
     "paths": {
       "types/*": ["./app/types/*"],
       "mocks/*": ["./app/mocks/*"],
-      "components/*": ["./app/components/*"]
+      "components/*": ["./app/components/*"],
+      "utils/*": ["./app/utils/*"]
     }
   }
 }

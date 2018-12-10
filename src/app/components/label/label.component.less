@@ -1,8 +1,29 @@
+@import 'fonts';
+@import 'common';
+
 .label {
   display: inline-flex;
+  font-family: @font;
+  align-items: center;
+
+  &__icon {
+    margin-right: 5px;
+  }
+
+  &__icon svg {
+    transform: scale(0.8);
+    fill: @blue
+  }
+
+  &__caption {
+    color: @grey-light;
+    font-size: 1.2rem;
+  }
 
   &__value {
     margin-left: 5px;
+    color: @grey;
+    font-size: 1.2rem;
   }
 }
 

@@ -12,7 +12,8 @@
           (input)="onSearchHandler($event.target.value)"
           placeholder="Search by name, description or author"
         />
-        <button>+ Add course</button>
+        <app-button className="page-header__control__button" [settings]="{bgColor: 'green'}" [text]="'Search'"></app-button>
+        <app-button className="page-header__control__button" [settings]="{bgColor: 'transparent'}" [text]="'Add course'" [icon]="iconType.Plus"></app-button>
       </div>
     </div>
   </div>

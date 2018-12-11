@@ -1,4 +1,4 @@
-import {Component, OnInit, Input} from '@angular/core'
+import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core'
 import {CourseItem} from 'types/course-item.types'
 import {UtilsService} from 'utils/utils.service'
 import {iconType} from 'components/icon/icon-type.enum'
@@ -7,6 +7,7 @@ import {iconType} from 'components/icon/icon-type.enum'
   selector: 'app-course-item',
   templateUrl: './course-item.component.html',
   styleUrls: ['./course-item.component.less'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CourseItemComponent implements OnInit {
   public iconType = iconType

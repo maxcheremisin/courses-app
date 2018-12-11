@@ -1,0 +1,4 @@
+<button class="button {{className}}" [ngClass]="getClassName()">
+  <app-icon *ngIf="icon" [type]="icon" [className]="'button__icon'"></app-icon>
+  <span class="button__text">{{text}}</span>
+</button>

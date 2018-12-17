@@ -3,5 +3,5 @@ export interface CourseItem {
   duration?: number
   description?: string
   authors?: string[]
-  date?: Date
+  date?: Date | string
 }

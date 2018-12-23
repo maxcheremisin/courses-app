@@ -1,6 +1,5 @@
 import {Component, OnInit, Input, ViewEncapsulation} from '@angular/core'
 import {CourseItem} from 'types/course-item.types'
-import {UtilsService} from 'utils/utils.service'
 import {iconType} from 'components/icon/icon-type.enum'
 
 @Component({
@@ -12,6 +11,8 @@ import {iconType} from 'components/icon/icon-type.enum'
 export class CourseItemComponent implements OnInit {
   public iconType = iconType
 
+  public isFavorite?: boolean
+
   @Input()
   public courseItem: CourseItem
 
@@ -20,7 +21,12 @@ export class CourseItemComponent implements OnInit {
     console.log(`on ${caption} click`)
   }
 
-  constructor(private utils: UtilsService) {}
+  public toggleFavorite = (e: Event) => {
+    e.stopPropagation()
+    this.isFavorite = !this.isFavorite
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isFavorite = this.courseItem.favorite
+  }
 }

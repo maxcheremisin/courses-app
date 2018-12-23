@@ -2,6 +2,14 @@
 @import 'fonts';
 
 .course-item {
+  &--fresh {
+    background-color: @green-transparent;
+  }
+
+  &--upcoming {
+    background-color: @blue-transparent;
+  }
+
   &:hover {
     transition: all 0.2s ease-in-out;
     transform: translateY(-2px);
@@ -14,7 +22,6 @@
     bottom: 2px;
   }
 
-  cursor: pointer;
   transition: all 0.2s ease-in-out;
   position: relative;
   display: flex;
@@ -46,6 +53,17 @@
     font-family: @font-thin;
     margin: 10px 0;
     flex-grow: 1;
+
+    &__icon {
+      stroke: @orange;
+      fill: transparent;
+      stroke-width: 2px;
+      cursor: pointer;
+
+      &--favorite {
+        fill: @orange;
+      }
+    }
   }
 
   &__description {

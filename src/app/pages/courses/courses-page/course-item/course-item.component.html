@@ -1,8 +1,21 @@
-<div class="course-item" (click)="[onItemClick($event, courseItem.caption)]">
+<div
+  class="course-item"
+  (click)="[onItemClick($event, courseItem.caption)]"
+  [appHighlightCourse]="courseItem.date"
+>
   <img class="course-item__image" width="240" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
   <div class="course-item__body">
     <h1 class="course-item__caption">
-      {{courseItem.caption}}
+      {{courseItem.caption | uppercase}}
+      <app-icon
+        [type]="iconType.Star"
+        [onClick]=toggleFavorite
+        [className]="{
+          'course-item__caption__icon': true,
+          'course-item__caption__icon--favorite': isFavorite
+        }"
+      >
+      </app-icon>
     </h1>
     <p class="course-item__description">{{courseItem.description}}</p>
     <div class="course-item__label-group">
@@ -14,12 +27,12 @@
       <app-label
         [iconType]="iconType.Time"
         [caption]="'Duration:'"
-        [value]="courseItem.duration + ' min'"
+        [value]="courseItem.duration | durationPipe"
       ></app-label>
       <app-label
         [iconType]="iconType.Calendar"
         [caption]="'Date:'"
-        [value]="utils.parseDate(courseItem.date)"
+        [value]="courseItem.date | date: 'dd.MM.yyyy'"
       ></app-label>
     </div>
   </div>

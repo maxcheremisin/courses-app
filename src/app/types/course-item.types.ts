@@ -4,4 +4,5 @@ export interface CourseItem {
   description?: string
   authors?: string[]
   date?: Date | string
+  favorite?: boolean
 }

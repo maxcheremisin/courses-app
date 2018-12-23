@@ -4,41 +4,42 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin", "Some Man"],
     "duration": 87,
-    "date": "2018-11-12"
+    "date": "2019-01-01"
   },
   {
     "caption": "Angular MVC Development Course",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin"],
-    "duration": 87,
-    "date": "2018-11-12"
+    "duration": 187,
+    "date": "2018-12-23",
+    "favorite": true
   },
   {
-    "caption": "Angular Fundamentals and Practice",
+    "caption": "Angular Fundamentals and Practice Part 1",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin"],
-    "duration": 87,
-    "date": "2018-11-12"
+    "duration": 59,
+    "date": "2018-12-10"
   },
   {
-    "caption": "Angular Fundamentals and Practice",
+    "caption": "Angular Fundamentals and Practice Part 2",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin"],
-    "duration": 87,
+    "duration": 35,
     "date": "2018-11-12"
   },
   {
     "caption": "Introduction to Angular JS",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin"],
-    "duration": 87,
-    "date": "2018-11-12"
+    "duration": 57,
+    "date": "2018-10-12"
   },
   {
     "caption": "Introduction to Angular 2",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin"],
-    "duration": 87,
-    "date": "2018-11-12"
+    "duration": 120,
+    "date": "2019-01-10"
   }
 ]

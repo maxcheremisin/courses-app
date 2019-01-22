@@ -1,7 +1,7 @@
 <div class="courses-list">
   <div *ngIf="coursesList.length">
     <span class="courses-list__total">There are {{coursesList.length}} courses</span>
-    <app-course-item *ngFor="let course of coursesList | orderBy: 'date'" [courseItem]="course"></app-course-item>
+    <app-course-item *ngFor="let course of coursesList | orderBy: 'date'" [courseItem]="course" [reload]="reload"></app-course-item>
     <div>courses list paginating</div>
   </div>
   <div *ngIf="!coursesList.length" class="courses-list__no-data">

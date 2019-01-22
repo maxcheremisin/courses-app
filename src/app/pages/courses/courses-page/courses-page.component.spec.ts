@@ -6,6 +6,7 @@ import {CoursesService} from '../courses.service'
 
 const coursesMock: CourseItem[] = [
   {
+    id: 1,
     caption: 'Test',
     authors: ['Author One', 'Author Two'],
     date: '2018-12-12',
@@ -13,6 +14,7 @@ const coursesMock: CourseItem[] = [
     description: 'testing text',
   },
   {
+    id: 2,
     caption: 'Test 2',
     authors: ['Author One', 'Author Two'],
     date: '2018-12-12',
@@ -24,7 +26,7 @@ const coursesMock: CourseItem[] = [
 describe('CoursesPageComponent', () => {
   let fixture: ComponentFixture<CoursesPageComponent>
   let component: CoursesPageComponent
-  let courseService: CoursesService
+  let courseService: Partial<CoursesService>
 
   beforeEach(() => {
     courseService = {

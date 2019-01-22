@@ -1,5 +1,6 @@
 [
   {
+    "id": 1,
     "caption": "Angular 2: From Zero to Hero",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin", "Some Man"],
@@ -7,6 +8,7 @@
     "date": "2019-01-01"
   },
   {
+    "id": 2,
     "caption": "Angular MVC Development Course",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin"],
@@ -15,6 +17,7 @@
     "favorite": true
   },
   {
+    "id": 3,
     "caption": "Angular Fundamentals and Practice Part 1",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin"],
@@ -22,6 +25,7 @@
     "date": "2018-12-10"
   },
   {
+    "id": 4,
     "caption": "Angular Fundamentals and Practice Part 2",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin"],
@@ -29,6 +33,7 @@
     "date": "2018-11-12"
   },
   {
+    "id": 5,
     "caption": "Introduction to Angular JS",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin"],
@@ -36,6 +41,7 @@
     "date": "2018-10-12"
   },
   {
+    "id": 6,
     "caption": "Introduction to Angular 2",
     "description": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid consectetur culpa cupiditate facilis illo, itaque maiores odio odit porro possimus quaerat vel veritatis vero. Laudantium non quam sapiente sint vel.",
     "authors": ["Arthur Globin"],

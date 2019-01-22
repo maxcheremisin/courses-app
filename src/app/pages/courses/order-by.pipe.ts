@@ -1,29 +1,25 @@
 import {Pipe, PipeTransform} from '@angular/core'
 
+interface SortableItem {
+  [K: string]: string | number
+}
+
 @Pipe({name: 'orderBy'})
 export class OrderByPipe implements PipeTransform {
-  transform(array: any[], orderBy: string, asc = false) {
+  transform(array: SortableItem[], orderBy: string, asc = false) {
     const isDate = orderBy === 'date'
 
     if (!orderBy || !orderBy.trim()) {
       return array
     }
 
-    if (asc) {
-      return Array.from(array).sort((item1, item2) => {
-        if (isDate) {
-          return this.orderByDate(item1[orderBy], item2[orderBy])
-        }
-        return this.defaultComparator(item1[orderBy], item2[orderBy])
-      })
-    } else {
-      return Array.from(array).sort((item1, item2) => {
-        if (isDate) {
-          return this.orderByDate(item2[orderBy], item1[orderBy])
-        }
-        return this.defaultComparator(item2[orderBy], item1[orderBy])
-      })
-    }
+    return Array.from(array).sort((item1, item2) => {
+      const elements: [keyof SortableItem, keyof SortableItem] = asc
+        ? [item1[orderBy], item2[orderBy]]
+        : [item2[orderBy], item1[orderBy]]
+
+      return isDate ? this.orderByDate(...elements) : this.defaultComparator(...elements)
+    })
   }
 
   protected defaultComparator(a: any, b: any) {
@@ -46,7 +42,7 @@ export class OrderByPipe implements PipeTransform {
     return 0
   }
 
-  protected orderByDate(a: string, b: string) {
+  protected orderByDate(a: keyof SortableItem, b: keyof SortableItem) {
     const date1 = new Date(a)
     const date2 = new Date(b)
 

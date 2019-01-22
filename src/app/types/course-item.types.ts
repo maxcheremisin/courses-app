@@ -1,4 +1,5 @@
 export interface CourseItem {
+  id: number
   caption: string
   duration?: number
   description?: string

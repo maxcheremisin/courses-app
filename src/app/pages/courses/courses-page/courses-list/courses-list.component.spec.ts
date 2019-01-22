@@ -5,6 +5,7 @@ import {CoursesListComponent} from './courses-list.component'
 
 const coursesListMock: CourseItem[] = [
   {
+    id: 1,
     caption: 'Test Item 1',
     authors: ['Author One', 'Author Two'],
     date: '2018-12-12',
@@ -12,6 +13,7 @@ const coursesListMock: CourseItem[] = [
     description: 'testing text',
   },
   {
+    id: 2,
     caption: 'Test Item 2',
     authors: ['Author One', 'Author Two'],
     date: '2018-12-12',

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, ViewEncapsulation} from '@angular/core'
+import {Component, Input, ViewEncapsulation} from '@angular/core'
 import {iconType} from 'components/icon/icon-type.enum'
 
 interface ButtonSettings {
@@ -13,7 +13,15 @@ interface ButtonSettings {
   styleUrls: ['./button.component.less'],
   encapsulation: ViewEncapsulation.Native,
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
+  private handleClick(e: Event) {
+    e.stopPropagation()
+
+    if (this.onClick) {
+      this.onClick(e)
+    }
+  }
+
   @Input()
   private className = ''
 
@@ -26,6 +34,9 @@ export class ButtonComponent implements OnInit {
   @Input()
   private settings: ButtonSettings = {}
 
+  @Input()
+  private onClick?: (e: Event) => void
+
   public getClassName() {
     const {bgColor, textColor, rounded} = this.settings
 
@@ -35,8 +46,4 @@ export class ButtonComponent implements OnInit {
       [`button--rounded`]: rounded,
     }
   }
-
-  constructor() {}
-
-  ngOnInit() {}
 }

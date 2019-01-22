@@ -11,17 +11,17 @@ export class CoursesPageComponent implements OnInit {
 
   public courses: CourseItem[] = []
 
-  private setCourses(query?: string) {
+  private reload = (query?: string) => {
     this.courseService.getCourses(query).then(courses => {
       this.courses = courses
     })
   }
 
-  public onCourseSearch = (query: string) => {
-    this.setCourses(query)
+  public onCourseSearch(query: string) {
+    this.reload(query)
   }
 
   ngOnInit() {
-    this.setCourses()
+    this.reload()
   }
 }

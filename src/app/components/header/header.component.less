@@ -1,4 +1,5 @@
 @import 'mixins';
+@import 'fonts';
 
 .header {
   .fixed-bar();
@@ -6,5 +7,30 @@
 
   &__content {
     .page-size();
+
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__dropdown {
+    &__label {
+      white-space: nowrap;
+      font-size: 1.4rem;
+      font-family: @font-thin;
+      margin-bottom: 5px;
+    }
+
+    &__login {
+      white-space: nowrap;
+      font-size: 1.6rem;
+      font-family: @font;
+      color: @blue;
+      text-align: center;
+    }
+
+    &__button {
+      width: 100%;
+      margin-top: 20px;
+    }
   }
 }

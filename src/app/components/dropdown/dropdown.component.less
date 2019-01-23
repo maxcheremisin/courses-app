@@ -1,0 +1,28 @@
+@import 'common';
+@import 'mixins';
+@import 'fonts';
+
+.dropdown {
+  width: 32px;
+  position: relative;
+
+  &:hover > &__content {
+    display: inherit;
+  }
+
+  &__content {
+    background-color: @white;
+    padding: 10px;
+    border-radius: 3px;
+    display: none;
+    position: absolute;
+    right: 0;
+    box-shadow: @shadow;
+  }
+
+  &__icon > svg {
+    transform: rotate(90deg);
+    fill: @white;
+    stroke: @grey-light;
+  }
+}

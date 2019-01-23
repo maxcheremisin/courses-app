@@ -27,9 +27,11 @@ export class CourseItemComponent implements OnInit {
   }
 
   public onRemoveItem = (e: Event) => {
-    return (
-      confirm('Are you sure you want to delete this course?') && this.courseService.removeCourse(this.courseItem).then(() => this.reload())
-    )
+    const confirmation = confirm(`Are you sure you want to delete "${this.courseItem.caption}"?`)
+
+    if (confirmation) {
+      this.courseService.removeCourse(this.courseItem).then(() => this.reload())
+    }
   }
 
   public toggleFavorite = (e: Event) => {

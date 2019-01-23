@@ -1,0 +1,30 @@
+<div class="login-form">
+  <h1 class="login-form__header">Login</h1>
+  <app-button
+    [text]="'EPAM Login'"
+    [settings]="{textColor: 'blue', bold: true}"
+    className="login-form__element"
+  ></app-button>
+  <div class="login-form__element login-form__divider">
+    <span class="login-form__divider__text">or</span>
+  </div>
+  <input
+    (input)="handleInput('email')($event.target.value)"
+    class="login-form__element"
+    type="text"
+    placeholder="Email"
+  >
+  <input
+    (input)="handleInput('password')($event.target.value)"
+    (keydown)="onSubmit($event)"
+    class="login-form__element"
+    type="password"
+    placeholder="Password"
+  >
+  <app-button
+    [onClick]="onSubmit"
+    [text]="'Login'"
+    [settings]="{bgColor: 'green', bold: true}"
+    className="login-form__element"
+  ></app-button>
+</div>

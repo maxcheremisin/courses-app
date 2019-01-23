@@ -41,6 +41,6 @@ describe('PageHeaderComponent', () => {
 
   it('raises the input value', () => {
     component.onSearchHandler('test value')
-    component.onSearch.subscribe((input: string) => expect(input).toBe('test value'))
+    component.search.subscribe((input: string) => expect(input).toBe('test value'))
   })
 })

@@ -4,13 +4,10 @@ import {CourseItem} from 'types/course-item.types'
 
 type CourseSearchParams = [CourseItem, string]
 type CourseCreateParams = Pick<CourseItem, Exclude<keyof CourseItem, 'id'>>
-type CourseUpdateParams = Partial<Pick<CourseItem, Exclude<keyof CourseItem, 'id'>>>
+type CourseUpdateParams = Partial<CourseCreateParams>
 
 function Read(Superclass = CrudController) {
   return class Class extends Superclass {
-    constructor() {
-      super()
-    }
 
     private isFoundByCaption(course: CourseItem, query: string) {
       return course.caption.toLowerCase().includes(query.toLowerCase())
@@ -40,7 +37,6 @@ function Read(Superclass = CrudController) {
       return this.courseList.filter(course => this.isFound(course, query))
     }
 
-
     public async getCourseById(id: number) {
       return this.courseList.find(course => course.id === id)
     }
@@ -49,9 +45,6 @@ function Read(Superclass = CrudController) {
 
 function Delete(Superclass = CrudController) {
   return class Class extends Superclass {
-    constructor() {
-      super()
-    }
 
     public async removeCourse(course: CourseItem) {
       this.courseList = this.courseList.filter(c => c !== course)
@@ -61,9 +54,6 @@ function Delete(Superclass = CrudController) {
 
 function Create(Superclass = CrudController) {
   return class Class extends Superclass {
-    constructor() {
-      super()
-    }
 
     public createCourse(params: CourseCreateParams) {}
   }
@@ -71,9 +61,6 @@ function Create(Superclass = CrudController) {
 
 function Update(Superclass = CrudController) {
   return class Class extends Superclass {
-    constructor() {
-      super()
-    }
 
     public updateCourse(params: CourseUpdateParams) {}
   }

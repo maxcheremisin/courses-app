@@ -1,4 +1,6 @@
+import {Router} from '@angular/router'
 import {Component, OnInit} from '@angular/core'
+import {AuthService} from '../../../auth.service'
 
 @Component({
   selector: 'app-login-page',
@@ -6,7 +8,17 @@ import {Component, OnInit} from '@angular/core'
   styleUrls: ['./login-page.component.less'],
 })
 export class LoginPageComponent implements OnInit {
-  constructor() {}
+  constructor(private auth: AuthService, private router: Router) {}
 
-  ngOnInit() {}
+  public onSubmit({email, password}: {email: string, password: string}) {
+    this.auth.logIn(email, password)
+  }
+
+  ngOnInit() {
+    this.auth.authUpdater.subscribe((isLoggedIn: boolean) => {
+      if (isLoggedIn) {
+        this.router.navigateByUrl('')
+      }
+    })
+  }
 }

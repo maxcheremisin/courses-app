@@ -10,14 +10,14 @@ import {iconType} from 'components/icon/icon-type.enum'
 export class PageHeaderComponent implements OnInit {
   constructor() {}
 
+  @Output()
+  public search: EventEmitter<string> = new EventEmitter<string>()
+
   public iconType = iconType
 
   public onSearchHandler(input: string) {
-    this.onSearch.emit(input)
+    this.search.emit(input)
   }
-
-  @Output()
-  public onSearch: EventEmitter<string> = new EventEmitter<string>()
 
   ngOnInit() {}
 }

@@ -1,5 +1,15 @@
 <header class="header">
   <div class="header__content">
     <app-logo></app-logo>
+    <app-dropdown *ngIf="auth.isLoggedIn">
+      <p class="header__dropdown__label">You are logged as</p>
+      <p class="header__dropdown__login">{{auth.getUserInfo().login | uppercase}}</p>
+      <app-button
+        [onClick]="onLogOut"
+        [className]="'header__dropdown__button'"
+        [text]="'Log out'"
+        [settings]="{bgColor: 'orange'}"
+      ></app-button>
+    </app-dropdown>
   </div>
 </header>

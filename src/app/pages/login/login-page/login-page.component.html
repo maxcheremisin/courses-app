@@ -1,3 +1,15 @@
-<p class="login-page">
-  login-page works!
-</p>
+<div class="login-page">
+  <div class="login-page__content">
+    <div class="login-page__greeting">
+      <h1>Welcome</h1>
+      <p>
+        To the Angular global mentoring program,
+        here you can find courses that cover all
+        topics needed to start your own Angular application.
+      </p>
+    </div>
+    <div class="login-page__form">
+      <app-login-form (submit)="onSubmit($event)"></app-login-form>
+    </div>
+  </div>
+</div>

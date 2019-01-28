@@ -8,6 +8,7 @@ import {UtilsService} from 'utils/utils.service'
 import {CourseItemComponent} from './course-item.component'
 
 const courseItemMock: CourseItem = {
+  id: 1,
   caption: 'Test Item',
   authors: ['Author One', 'Author Two'],
   date: '2018-12-12',

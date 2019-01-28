@@ -1,0 +1,14 @@
+<label class="input">
+  <span *ngIf="label" class="input__label">{{label}}</span>
+  <input
+    *ngIf="type !== 'textarea'; else textarea"
+    [type]="type"
+    [placeholder]="placeholder"
+    [ngClass]="getClassName()"
+    [(ngModel)]="field"
+    (keydown)="handleKeyDown($event)"
+  >
+  <ng-template #textarea>
+    <textarea [placeholder]="placeholder" [ngClass]="getClassName()" [(ngModel)]="field"></textarea>
+  </ng-template>
+</label>

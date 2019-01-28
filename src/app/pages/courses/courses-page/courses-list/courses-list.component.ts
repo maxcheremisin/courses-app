@@ -12,8 +12,5 @@ export class CoursesListComponent implements OnInit {
   @Input()
   public coursesList: CourseItem[]
 
-  @Input()
-  public reload: () => void
-
   ngOnInit() {}
 }

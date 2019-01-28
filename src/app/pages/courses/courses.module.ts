@@ -8,6 +8,7 @@ import {ComponentsModule} from 'components/components.module'
 import {HighlightCourseDirective} from './highlight-course.directive'
 import {DurationPipe} from './duration.pipe'
 import {OrderByPipe} from './order-by.pipe'
+import {CourseEditorComponent} from './courses-page/course-editor/course-editor.component'
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import {OrderByPipe} from './order-by.pipe'
     HighlightCourseDirective,
     DurationPipe,
     OrderByPipe,
+    CourseEditorComponent,
   ],
   imports: [CommonModule, ComponentsModule],
   exports: [CoursesPageComponent],

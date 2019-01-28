@@ -1,0 +1,18 @@
+.editor {
+  &__grid {
+    display: grid;
+    grid-row-gap: 20px;
+    grid-column-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 3fr 1fr 1fr;
+
+    :nth-child(1), :nth-child(2), :nth-child(5) {
+      grid-column-start: 1;
+      grid-column-end: 3;
+    }
+  }
+
+  &__textarea {
+    height: 120px;
+  }
+}

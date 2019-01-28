@@ -1,5 +1,7 @@
-import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core'
+import {Component, EventEmitter, Output, ViewEncapsulation} from '@angular/core'
+import {Router} from '@angular/router'
 import {iconType} from 'components/icon/icon-type.enum'
+import {CoursesService} from '../../courses.service'
 
 @Component({
   selector: 'app-page-header',
@@ -7,11 +9,11 @@ import {iconType} from 'components/icon/icon-type.enum'
   templateUrl: './page-header.component.html',
   encapsulation: ViewEncapsulation.None,
 })
-export class PageHeaderComponent implements OnInit {
-  constructor() {}
+export class PageHeaderComponent {
+  constructor(private coursesService: CoursesService, private router: Router) {}
 
   @Output()
-  public search: EventEmitter<string> = new EventEmitter<string>()
+  public search = new EventEmitter<string>()
 
   public iconType = iconType
 
@@ -19,5 +21,7 @@ export class PageHeaderComponent implements OnInit {
     this.search.emit(input)
   }
 
-  ngOnInit() {}
+  public openModal = () => {
+    this.router.navigate([{outlets: {modal: 'add-course'}}])
+  }
 }

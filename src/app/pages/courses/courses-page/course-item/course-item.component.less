@@ -13,6 +13,10 @@
   &:hover &__caption {
     transition: all 0.2s ease-in-out;
     color: @blue;
+
+    &--underline {
+      width: 100%;
+    }
   }
 
   transition: all 0.2s ease-in-out;
@@ -25,6 +29,7 @@
   box-shadow: 0 0 10px -5px rgba(0, 0, 0, 0.75);
   font-family: @font;
   background-color: @white;
+  cursor: pointer;
 
   &__image {
     background-color: @blue;
@@ -37,6 +42,7 @@
     display: flex;
     flex-direction: column;
     padding: 10px 20px;
+    margin-right: 70px;
   }
 
   &__caption {
@@ -46,15 +52,34 @@
     font-family: @font-thin;
     margin: 10px 0;
     flex-grow: 1;
+    position: relative;
+
+    &--underline {
+      width: 0;
+      height: 1px;
+      background: @blue;
+      opacity: 0.5;
+      top: 35px;
+      position: absolute;
+      transition: 0.5s ease;
+    }
 
     &__icon {
       stroke: @orange;
-      fill: transparent;
+      fill: @orange;
       stroke-width: 2px;
-      cursor: pointer;
+      cursor: default;
 
-      &--favorite {
-        fill: @orange;
+      &:hover {
+        stroke: @yellow;
+        fill: @yellow;
+      }
+
+      &:not(&--favorite) {
+        fill: transparent;
+        &:hover {
+          fill: transparent;
+        }
       }
     }
   }
@@ -72,6 +97,8 @@
     padding: 15px;
     align-self: center;
     flex-shrink: 0;
+    position: absolute;
+    right: 0;
 
     &__button {
       margin-top: 10px;

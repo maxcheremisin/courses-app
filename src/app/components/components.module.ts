@@ -8,10 +8,32 @@ import {RouterModule} from '@angular/router'
 import {IconComponent} from './icon/icon.component'
 import {ButtonComponent} from './button/button.component'
 import {DropdownComponent} from './dropdown/dropdown.component'
+import {ModalComponent} from './modal/modal.component'
+import {InputComponent} from './input/input.component'
+import {FormsModule} from '@angular/forms'
 
 @NgModule({
-  declarations: [LabelComponent, PlainFooterComponent, HeaderComponent, LogoComponent, IconComponent, ButtonComponent, DropdownComponent],
-  imports: [CommonModule, RouterModule],
-  exports: [LabelComponent, PlainFooterComponent, HeaderComponent, LogoComponent, IconComponent, ButtonComponent],
+  declarations: [
+    LabelComponent,
+    PlainFooterComponent,
+    HeaderComponent,
+    LogoComponent,
+    IconComponent,
+    ButtonComponent,
+    DropdownComponent,
+    ModalComponent,
+    InputComponent,
+  ],
+  imports: [CommonModule, RouterModule, FormsModule],
+  exports: [
+    LabelComponent,
+    PlainFooterComponent,
+    HeaderComponent,
+    LogoComponent,
+    IconComponent,
+    ButtonComponent,
+    ModalComponent,
+    InputComponent,
+  ],
 })
 export class ComponentsModule {}

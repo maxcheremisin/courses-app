@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core'
+import {EventEmitter, Injectable} from '@angular/core'
 import {courseList} from 'mocks/course-list.mock'
 import {CourseItem} from 'types/course-item.types'
 
@@ -8,9 +8,8 @@ type CourseUpdateParams = Partial<CourseCreateParams>
 
 function Read(Superclass = CrudController) {
   return class Class extends Superclass {
-
     private isFoundByCaption(course: CourseItem, query: string) {
-      return course.caption.toLowerCase().includes(query.toLowerCase())
+      return course.caption && course.caption.toLowerCase().includes(query.toLowerCase())
     }
 
     private isFoundByDescription(course: CourseItem, query: string) {
@@ -45,42 +44,59 @@ function Read(Superclass = CrudController) {
 
 function Delete(Superclass = CrudController) {
   return class Class extends Superclass {
-
     public async removeCourse(course: CourseItem) {
       this.courseList = this.courseList.filter(c => c !== course)
+      this.courseEmitter()
     }
   }
 }
 
 function Create(Superclass = CrudController) {
   return class Class extends Superclass {
-
-    public createCourse(params: CourseCreateParams) {}
+    public async createCourse(params: CourseCreateParams) {
+      const course: CourseItem = {
+        id: this.courseList.length + 1,
+        ...params,
+      }
+      this.courseList = [...this.courseList, course]
+      this.courseEmitter()
+    }
   }
 }
 
 function Update(Superclass = CrudController) {
   return class Class extends Superclass {
-
-    public updateCourse(params: CourseUpdateParams) {}
+    public async updateCourse(id: number, params: CourseUpdateParams) {
+      let course = this.courseList.find(c => c.id === id)
+      if (!course) {
+        return
+      }
+      course = {...course, ...params}
+      this.courseList = [...this.courseList.filter(c => c.id !== id), {...course}]
+      this.courseEmitter()
+    }
   }
 }
 
 declare class CrudInterface {
   protected courseList: CourseItem[]
-  public createCourse(params: Partial<CourseItem>): void
+  public courseUpdater: EventEmitter<CourseItem[]>
+  protected courseEmitter(): void
+  public createCourse(params: CourseUpdateParams): Promise<void>
   public getCourseById(id: number): Promise<CourseItem | undefined>
   public removeCourse(course: CourseItem): Promise<void>
-  public updateCourse(params: Partial<CourseItem>): void
+  public updateCourse(id: number, params: CourseUpdateParams): Promise<void>
   public getCourses(query?: string): Promise<CourseItem[]>
 }
 
 const CrudController: new () => CrudInterface = (() => {}) as any
 
 @Injectable({providedIn: 'root'})
-export class CoursesService extends Create(Read(Update(Delete())))  {
+export class CoursesService extends Create(Read(Update(Delete()))) {
   constructor() {
     super()
     this.courseList = courseList
+    this.courseUpdater = new EventEmitter()
+    this.courseEmitter = () => this.courseUpdater.emit(this.courseList)
   }
 }

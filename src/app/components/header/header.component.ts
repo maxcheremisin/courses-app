@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core'
-import {AuthService} from '../../auth.service'
+import {AuthService} from 'services/auth.service'
 
 @Component({
   selector: 'app-header',
@@ -7,12 +7,10 @@ import {AuthService} from '../../auth.service'
   styleUrls: ['./header.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   constructor(public auth: AuthService) {}
 
   public onLogOut = () => {
     this.auth.logOut()
   }
-
-  ngOnInit() {}
 }

@@ -1,6 +1,6 @@
 import {Router} from '@angular/router'
 import {Component, OnInit} from '@angular/core'
-import {AuthService} from '../../../auth.service'
+import {AuthService} from 'services/auth.service'
 
 @Component({
   selector: 'app-login-page',
@@ -17,7 +17,9 @@ export class LoginPageComponent implements OnInit {
   ngOnInit() {
     this.auth.authUpdater.subscribe((isLoggedIn: boolean) => {
       if (isLoggedIn) {
-        this.router.navigateByUrl('')
+        this.router.navigateByUrl('').then(() => {
+          this.router.navigate([{outlets: {modal: null}}])
+        })
       }
     })
   }

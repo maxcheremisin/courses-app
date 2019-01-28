@@ -7,12 +7,13 @@
   <div class="course-item__body">
     <h1 class="course-item__caption">
       {{courseItem.caption | uppercase}}
+      <div class="course-item__caption--underline"></div>
       <app-icon
         [type]="iconType.Star"
         [onClick]=toggleFavorite
         [className]="{
           'course-item__caption__icon': true,
-          'course-item__caption__icon--favorite': isFavorite
+          'course-item__caption__icon--favorite': courseItem.favorite
         }"
       >
       </app-icon>
@@ -22,7 +23,7 @@
       <app-label
         [iconType]="iconType.Person"
         [caption]="'Authors:'"
-        [value]="courseItem.authors.join(', ')"
+        [value]="courseItem.authors && courseItem.authors.join(', ')"
       ></app-label>
       <app-label
         [iconType]="iconType.Time"

@@ -12,16 +12,11 @@ export class LoginFormComponent implements OnInit {
   @Output()
   public submit: EventEmitter<{}> = new EventEmitter<{}>()
 
-  private email = ''
-  private password = ''
-
-  public handleInput = (type: 'email' | 'password') => (value: string) => {
-    this[type] = value
-  }
+  public form = {email: '', password: ''}
 
   public onSubmit = (e: KeyboardEvent) => {
     if (e && e.code === 'Enter' || e.type === 'click') {
-      this.submit.emit({email: this.email, password: this.password})
+      this.submit.emit(this.form)
     }
   }
 

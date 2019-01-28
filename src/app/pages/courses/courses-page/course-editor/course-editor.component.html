@@ -1,0 +1,33 @@
+<app-modal header="Add course" (submit)="onSubmit($event)">
+  <form class="editor__grid">
+    <app-input
+      label="Title"
+      placeholder="Enter a name of course"
+      [(field)]="form.caption"
+    ></app-input>
+    <app-input
+      label="Description"
+      type="textarea"
+      className="editor__textarea"
+      placeholder="Please enter a more detail about course"
+      [(field)]="form.description"
+    ></app-input>
+    <app-input
+      label="Date"
+      type="date"
+      placeholder="Date"
+      [(field)]="form.date"
+    ></app-input>
+    <app-input
+      label="Duration"
+      type="number"
+      placeholder="Minutes"
+      [(field)]="form.duration"
+    ></app-input>
+    <app-input
+      label="Authors"
+      placeholder="Enter authors separated by ';'"
+      [(field)]="form.authors"
+    ></app-input>
+  </form>
+</app-modal>

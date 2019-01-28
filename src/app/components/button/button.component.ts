@@ -16,21 +16,21 @@ interface ButtonSettings {
 })
 export class ButtonComponent {
   @Input()
-  private className = ''
+  public className = ''
 
   @Input()
-  private text?: string
+  public text?: string
 
   @Input()
-  private icon?: iconType
+  public icon?: iconType
 
   @Input()
-  private settings: ButtonSettings = {}
+  public settings: ButtonSettings = {}
 
   @Input()
-  private onClick?: (e: Event) => void
+  public onClick?: (e: Event) => void
 
-  private handleClick(e: Event) {
+  public handleClick(e: Event) {
     e.stopPropagation()
 
     if (this.onClick) {

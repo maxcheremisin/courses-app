@@ -8,19 +8,18 @@
   <div class="login-form__element login-form__divider">
     <span class="login-form__divider__text">or</span>
   </div>
-  <input
-    (input)="handleInput('email')($event.target.value)"
-    class="login-form__element"
-    type="text"
-    placeholder="Email"
-  >
-  <input
-    (input)="handleInput('password')($event.target.value)"
-    (keydown)="onSubmit($event)"
-    class="login-form__element"
-    type="password"
+  <app-input
+    placeholder="Email or login"
+    [(field)]="form.email"
+    className="login-form__element"
+  ></app-input>
+  <app-input
     placeholder="Password"
-  >
+    [(field)]="form.password"
+    type="password"
+    className="login-form__element"
+    [onKeyDown]="onSubmit"
+  ></app-input>
   <app-button
     [onClick]="onSubmit"
     [text]="'Login'"

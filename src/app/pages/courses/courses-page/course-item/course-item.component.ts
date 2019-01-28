@@ -8,19 +8,15 @@ import {CoursesService} from '../../courses.service'
   templateUrl: './course-item.component.html',
   styleUrls: ['./course-item.component.less'],
   encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseItemComponent implements OnInit {
   constructor(private courseService: CoursesService) {}
 
   public iconType = iconType
 
-  public isFavorite?: boolean
-
   @Input()
   public courseItem: CourseItem
-
-  @Input()
-  public reload: () => void
 
   public onItemClick: (e: Event, id: number) => void = (e, id) => {
     this.courseService.getCourseById(id).then(course => course && console.log(`on ${course.caption} click`))
@@ -30,16 +26,14 @@ export class CourseItemComponent implements OnInit {
     const confirmation = confirm(`Are you sure you want to delete "${this.courseItem.caption}"?`)
 
     if (confirmation) {
-      this.courseService.removeCourse(this.courseItem).then(() => this.reload())
+      this.courseService.removeCourse(this.courseItem)
     }
   }
 
   public toggleFavorite = (e: Event) => {
     e.stopPropagation()
-    this.isFavorite = !this.isFavorite
+    this.courseService.updateCourse(this.courseItem.id, {favorite: !this.courseItem.favorite})
   }
 
-  ngOnInit() {
-    this.isFavorite = this.courseItem.favorite
-  }
+  ngOnInit() {}
 }

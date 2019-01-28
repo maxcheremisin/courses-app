@@ -21,6 +21,7 @@
       "types/*": ["./app/types/*"],
       "mocks/*": ["./app/mocks/*"],
       "components/*": ["./app/components/*"],
+      "services/*": ["./app/services/*"],
       "utils/*": ["./app/utils/*"]
     }
   }

@@ -5,13 +5,13 @@
         Find or add Angular courses...
       </h1>
       <div class="page-header__control__elements">
-        <input
-          class="page-header__control__search-input"
-          title="Search course"
-          type="text"
-          (input)="onSearchHandler($event.target.value)"
+        <app-input
+          type="search"
           placeholder="Search by name, description or author"
-        />
+          className="page-header__control__search-input"
+          [onInput]="onSearchHandler"
+        >
+        </app-input>
         <app-button
           className="page-header__control__button"
           [settings]="{bgColor: 'green'}"
@@ -20,7 +20,8 @@
         <app-button
           className="page-header__control__button"
           [settings]="{bgColor: 'transparent'}"
-          [text]="'Add course'" [icon]="iconType.Plus"
+          text="Add course"
+          [icon]="iconType.Plus"
           [onClick]="openModal"
         ></app-button>
       </div>

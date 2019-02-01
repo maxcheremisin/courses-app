@@ -8,5 +8,5 @@ export const Routes: Route[] = [
   {path: 'login', component: LoginPageComponent},
   {path: '', component: CoursesPageComponent},
   {path: '**', component: PageNotFoundComponent},
-  {path: 'add-course', component: CourseEditorComponent, outlet: 'modal'},
+  {path: 'course/:id', component: CourseEditorComponent, outlet: 'modal'},
 ]

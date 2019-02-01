@@ -10,12 +10,14 @@
   </div>
   <app-input
     placeholder="Email or login"
-    [(field)]="form.email"
+    [model]="form"
+    field="email"
     className="login-form__element"
   ></app-input>
   <app-input
     placeholder="Password"
-    [(field)]="form.password"
+    [model]="form"
+    field="password"
     type="password"
     className="login-form__element"
     [onKeyDown]="onSubmit"

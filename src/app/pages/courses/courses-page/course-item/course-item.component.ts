@@ -2,6 +2,7 @@ import {Component, OnInit, Input, ViewEncapsulation, ChangeDetectionStrategy} fr
 import {CourseItem} from 'types/course-item.types'
 import {iconType} from 'components/icon/icon-type.enum'
 import {CoursesService} from '../../courses.service'
+import {Router} from '@angular/router'
 
 @Component({
   selector: 'app-course-item',
@@ -11,7 +12,7 @@ import {CoursesService} from '../../courses.service'
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CourseItemComponent implements OnInit {
-  constructor(private courseService: CoursesService) {}
+  constructor(private courseService: CoursesService, private router: Router) {}
 
   public iconType = iconType
 
@@ -33,6 +34,10 @@ export class CourseItemComponent implements OnInit {
   public toggleFavorite = (e: Event) => {
     e.stopPropagation()
     this.courseService.updateCourse(this.courseItem.id, {favorite: !this.courseItem.favorite})
+  }
+
+  public openModal = () => {
+    this.router.navigate([{outlets: {modal: `course/${this.courseItem.id}`}}])
   }
 
   ngOnInit() {}

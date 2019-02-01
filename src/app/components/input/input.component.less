@@ -4,6 +4,7 @@
 .input {
   display: flex;
   flex-direction: column;
+  position: relative;
 
   &__label {
     color: @grey-dark;
@@ -23,6 +24,23 @@
 
     &::placeholder {
       color: @grey-light;
+    }
+
+    &--search {
+      padding-left: 32px;
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    height: 100%;
+    padding: 5px;
+
+    & svg {
+      fill: @grey;
+      height: 100%;
+      top: 0 !important;
+      bottom: 0;
     }
   }
 }

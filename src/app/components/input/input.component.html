@@ -1,14 +1,16 @@
 <label class="input">
   <span *ngIf="label" class="input__label">{{label}}</span>
+  <app-icon *ngIf="type === 'search'" [type]="iconType.Search" className="input__icon"></app-icon>
   <input
     *ngIf="type !== 'textarea'; else textarea"
     [type]="type"
     [placeholder]="placeholder"
     [ngClass]="getClassName()"
-    [(ngModel)]="field"
+    [(ngModel)]="model[field]"
     (keydown)="handleKeyDown($event)"
+    (input)="handleInput($event)"
   >
   <ng-template #textarea>
-    <textarea [placeholder]="placeholder" [ngClass]="getClassName()" [(ngModel)]="field"></textarea>
+    <textarea [placeholder]="placeholder" [ngClass]="getClassName()" [(ngModel)]="model[field]"></textarea>
   </ng-template>
 </label>

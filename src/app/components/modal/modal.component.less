@@ -23,6 +23,18 @@
     border-radius: 5px;
   }
 
+  &__icon {
+    cursor: pointer;
+
+    & svg {
+      fill: @grey-dark
+    }
+
+    &:hover svg {
+      fill: @grey;
+    }
+  }
+
   &__header {
     display: flex;
     justify-content: space-between;
@@ -35,13 +47,13 @@
   }
 
   &__content {
-    padding: 10px;
+    margin: 20px;
   }
 
   &__footer {
     display: flex;
     justify-content: space-between;
-    padding: 15px 20px;
+    margin: 20px;
   }
 
   &__control {
@@ -49,7 +61,7 @@
   }
 
   &__button {
-    margin-left: 5px;
+    margin-left: 20px;
   }
 
   &__background {

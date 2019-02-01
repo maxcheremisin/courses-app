@@ -17,11 +17,11 @@ export class PageHeaderComponent {
 
   public iconType = iconType
 
-  public onSearchHandler(input: string) {
-    this.search.emit(input)
+  public onSearchHandler = (e: KeyboardEvent) => {
+    this.search.emit((e.target as HTMLInputElement).value)
   }
 
   public openModal = () => {
-    this.router.navigate([{outlets: {modal: 'add-course'}}])
+    this.router.navigate([{outlets: {modal: 'course/new'}}])
   }
 }

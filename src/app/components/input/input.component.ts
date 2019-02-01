@@ -1,4 +1,5 @@
-import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angular/core'
+import {Component, Input, ViewEncapsulation} from '@angular/core'
+import {iconType} from 'components/icon/icon-type.enum'
 
 @Component({
   selector: 'app-input',
@@ -7,23 +8,26 @@ import {Component, EventEmitter, Input, Output, ViewEncapsulation} from '@angula
   encapsulation: ViewEncapsulation.None,
 })
 export class InputComponent {
-  @Input() public type: 'text' | 'email' | 'password' | 'date' | 'number' | 'textarea' = 'text'
+  @Input() public type: 'text' | 'email' | 'password' | 'date' | 'number' | 'textarea' | 'search' = 'text'
   @Input() public label: string
-  @Input() public placeholder: string
+  @Input() public placeholder= ''
   @Input() public className: string | {[key: string]: boolean}
   @Input() public onKeyDown: (e: KeyboardEvent) => void
-  @Output()
-  public fieldChange = new EventEmitter<string>()
-  public fieldValue = ''
-  @Input()
-  public set field(value: string) {
-    this.fieldValue = value
-    this.fieldChange.emit(this.fieldValue)
-  }
+  @Input() public onInput: (e: KeyboardEvent) => void
+  @Input() public field: string
+  @Input() public model: {[K: string]: string} = {}
+
+  public iconType = iconType
 
   public handleKeyDown(e: KeyboardEvent) {
     if (this.onKeyDown) {
       this.onKeyDown(e)
+    }
+  }
+
+  public handleInput(e: KeyboardEvent) {
+    if (this.onInput) {
+      this.onInput(e)
     }
   }
 
@@ -32,6 +36,7 @@ export class InputComponent {
     return {
       ...className,
       'input__field': true,
+      'input__field--search': this.type === 'search',
     }
   }
 }

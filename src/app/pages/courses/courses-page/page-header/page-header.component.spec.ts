@@ -40,7 +40,7 @@ describe('PageHeaderComponent', () => {
   })
 
   it('raises the input value', () => {
-    component.onSearchHandler('test value')
+    component.onSearchHandler(new KeyboardEvent('keydown', {key: 'Z'}))
     component.search.subscribe((input: string) => expect(input).toBe('test value'))
   })
 })

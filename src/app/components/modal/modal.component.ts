@@ -1,6 +1,7 @@
 import {Component, ElementRef, Input, OnInit, ViewEncapsulation, Output, EventEmitter, OnDestroy} from '@angular/core'
 import {iconType} from 'components/icon/icon-type.enum'
 import {Router} from '@angular/router'
+import {AuthService} from 'services/auth.service'
 
 @Component({
   selector: 'app-modal',
@@ -37,7 +38,7 @@ import {Router} from '@angular/router'
   `,
 })
 export class ModalComponent implements OnInit, OnDestroy {
-  constructor(private router: Router, private el: ElementRef<HTMLDivElement>) {
+  constructor(private router: Router, private el: ElementRef<HTMLDivElement>, private auth: AuthService) {
     this.element = el.nativeElement
   }
 
@@ -56,6 +57,11 @@ export class ModalComponent implements OnInit, OnDestroy {
   public modalClose = new EventEmitter<Event>()
 
   public ngOnInit() {
+    if (!this.auth.isLoggedIn) {
+      this.router.navigate([{outlets: {modal: null}}])
+      return
+    }
+
     document.body.classList.add('modal-open')
 
     this.element.addEventListener('click', (e: Event) => {

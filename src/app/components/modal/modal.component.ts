@@ -38,7 +38,7 @@ import {AuthService} from 'services/auth.service'
   `,
 })
 export class ModalComponent implements OnInit, OnDestroy {
-  constructor(private router: Router, private el: ElementRef<HTMLDivElement>, private auth: AuthService) {
+  constructor(private router: Router, private el: ElementRef<HTMLDivElement>) {
     this.element = el.nativeElement
   }
 
@@ -57,11 +57,6 @@ export class ModalComponent implements OnInit, OnDestroy {
   public modalClose = new EventEmitter<Event>()
 
   public ngOnInit() {
-    if (!this.auth.isAuthenticated()) {
-      this.router.navigate([{outlets: {modal: null}}])
-      return
-    }
-
     document.body.classList.add('modal-open')
 
     this.element.addEventListener('click', (e: Event) => {

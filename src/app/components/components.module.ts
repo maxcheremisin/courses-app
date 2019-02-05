@@ -10,6 +10,7 @@ import {ButtonComponent} from './button/button.component'
 import {DropdownComponent} from './dropdown/dropdown.component'
 import {ModalComponent} from './modal/modal.component'
 import {InputComponent} from './input/input.component'
+import {LoaderComponent} from './loader/loader.component'
 import {FormsModule} from '@angular/forms'
 
 @NgModule({
@@ -23,6 +24,7 @@ import {FormsModule} from '@angular/forms'
     DropdownComponent,
     ModalComponent,
     InputComponent,
+    LoaderComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [
@@ -34,6 +36,7 @@ import {FormsModule} from '@angular/forms'
     ButtonComponent,
     ModalComponent,
     InputComponent,
+    LoaderComponent,
   ],
 })
 export class ComponentsModule {}

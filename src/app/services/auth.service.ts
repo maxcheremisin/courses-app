@@ -9,7 +9,8 @@ const CLIENT_ID = '2dnwBRePVtHR3vAgV2HLp7FHOQAoUcZc'
 export class AuthService {
   protected _auth0Client: WebAuth
   private _accessToken?: string
-  private userInfo?: {}
+  private userInfo?: Auth0DecodedHash['idTokenPayload']
+  public authenticationInProgress = false
   private readonly _properties: AuthOptions
 
   constructor(private router: Router) {
@@ -17,7 +18,7 @@ export class AuthService {
       clientID: CLIENT_ID,
       domain: AUTH_DOMAIN,
       responseType: 'token id_token',
-      redirectUri: `${window.location.origin}/`,
+      redirectUri: `${window.location.origin}/login`,
       audience: 'https://mxc.auth0.com/api/v2/',
       scope: 'openid profile',
     }
@@ -25,34 +26,32 @@ export class AuthService {
   }
 
   public checkSession() {
-    return new Promise<boolean>((resolve, reject) => {
-      this._auth0Client.checkSession(this._properties, async (error, authResult) => {
-        if (error && error.error !== 'login_required') {
-          this.router.navigateByUrl('/login')
-          return reject(error)
-        } else if (error) {
-          this.handleAuthentication()
-          return resolve(false)
+    this.authenticationInProgress = true
+
+    this._auth0Client.checkSession({prompt: 'none'}, async (error, authResult) => {
+      try {
+        const parsedData = error ? await this.parseHash() : authResult
+
+        if (parsedData) {
+          this._setSession(parsedData)
         }
-        if (!this.isAuthenticated()) {
-          this._setSession(authResult)
-          this.router.navigateByUrl('')
-          return resolve(true)
-        }
-      })
+      } catch (err) {
+        console.error(err)
+      }
+
+      this.authenticationInProgress = false
     })
   }
 
-  private handleAuthentication() {
-    this._auth0Client.parseHash((err, authResult) => {
-      if (authResult && authResult.accessToken && authResult.idToken) {
-        window.location.hash = ''
-        this._setSession(authResult)
-        this.router.navigateByUrl('/')
-      } else if (err) {
-        this.router.navigateByUrl('/login')
-        console.log(err)
-      }
+  private parseHash() {
+    return new Promise<Auth0DecodedHash | null>((resolve, reject) => {
+      this._auth0Client.parseHash((err, authResult) => {
+        if (err) {
+          reject(err)
+        } else {
+          resolve(authResult)
+        }
+      })
     })
   }
 
@@ -63,7 +62,7 @@ export class AuthService {
   private _setSession(authResult: Auth0DecodedHash) {
     this._accessToken = authResult.accessToken
     this.userInfo = authResult.idTokenPayload
-    window.location.hash = ''
+    this.router.navigateByUrl('')
   }
 
   public getUserInfo() {

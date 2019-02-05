@@ -17,7 +17,6 @@ export class CoursesPageComponent implements OnInit {
       this.courses = courses
     })
 
-    this.auth.checkSession()
     this.reload()
   }
 

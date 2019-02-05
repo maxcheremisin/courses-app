@@ -9,7 +9,5 @@ import {AuthService} from 'services/auth.service'
 export class LoginPageComponent implements OnInit {
   constructor(private auth: AuthService) {}
 
-  ngOnInit() {
-    this.auth.checkSession()
-  }
+  ngOnInit() {}
 }

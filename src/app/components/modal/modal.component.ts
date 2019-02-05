@@ -57,7 +57,7 @@ export class ModalComponent implements OnInit, OnDestroy {
   public modalClose = new EventEmitter<Event>()
 
   public ngOnInit() {
-    if (!this.auth.isLoggedIn) {
+    if (!this.auth.isAuthenticated()) {
       this.router.navigate([{outlets: {modal: null}}])
       return
     }

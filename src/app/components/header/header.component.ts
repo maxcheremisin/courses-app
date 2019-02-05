@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewEncapsulation} from '@angular/core'
+import {Component, ViewEncapsulation} from '@angular/core'
 import {AuthService} from 'services/auth.service'
 
 @Component({
@@ -8,9 +8,17 @@ import {AuthService} from 'services/auth.service'
   encapsulation: ViewEncapsulation.None,
 })
 export class HeaderComponent {
-  constructor(public auth: AuthService) {}
+  constructor(private auth: AuthService) {}
+
+  public isAuthenticated() {
+    return this.auth.isAuthenticated()
+  }
+
+  public userInfo() {
+    return this.auth.getUserInfo()
+  }
 
   public onLogOut = () => {
-    this.auth.logOut()
+    this.auth.logout()
   }
 }

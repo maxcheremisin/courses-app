@@ -1,4 +1,5 @@
-import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angular/core'
+import {Component, ViewEncapsulation} from '@angular/core'
+import {AuthService} from 'services/auth.service'
 
 @Component({
   selector: 'app-login-form',
@@ -6,19 +7,10 @@ import {Component, EventEmitter, OnInit, Output, ViewEncapsulation} from '@angul
   styleUrls: ['./login-form.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class LoginFormComponent implements OnInit {
-  constructor() {}
+export class LoginFormComponent {
+  constructor(private auth: AuthService) {}
 
-  @Output()
-  public submit: EventEmitter<{}> = new EventEmitter<{}>()
-
-  public form = {email: '', password: ''}
-
-  public onSubmit = (e: KeyboardEvent) => {
-    if (e && e.code === 'Enter' || e.type === 'click') {
-      this.submit.emit(this.form)
-    }
+  public onLogin = () => {
+    this.auth.login()
   }
-
-  ngOnInit() {}
 }

@@ -2,8 +2,8 @@ import {Auth0DecodedHash, AuthOptions, WebAuth} from 'auth0-js'
 import {Injectable} from '@angular/core'
 import {Router} from '@angular/router'
 
-const AUTH_DOMAIN = 'mxc.auth0.com'
-const CLIENT_ID = '2dnwBRePVtHR3vAgV2HLp7FHOQAoUcZc'
+const AUTH_DOMAIN = 'mxch.auth0.com'
+const CLIENT_ID = 'SEfVOUZ18dFs6dnbPsyUKzVQyq7YQ6Xv'
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -19,8 +19,8 @@ export class AuthService {
       domain: AUTH_DOMAIN,
       responseType: 'token id_token',
       redirectUri: `${window.location.origin}/login`,
-      audience: 'https://mxc.auth0.com/api/v2/',
-      scope: 'openid profile',
+      audience: `https://${AUTH_DOMAIN}/api/v2/`,
+      scope: 'openid profile email',
     }
     this._auth0Client = new WebAuth({...this._properties})
   }

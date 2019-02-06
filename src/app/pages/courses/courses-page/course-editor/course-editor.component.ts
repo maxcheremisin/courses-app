@@ -2,7 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core'
 import {ActivatedRoute} from '@angular/router'
 import {DatePipe} from '@angular/common'
 import {CourseItem} from 'types/course-item.types'
-import {CoursesService} from '../../courses.service'
+import {CoursesService} from '../../../../services/courses.service'
 
 @Component({
   selector: 'app-course-editor',
@@ -29,9 +29,9 @@ export class CourseEditorComponent implements OnInit {
     if (!isNew) {
       const id = Number(this.id)
 
-      this.coursesService.getCourseById(id).then(course => {
+      this.coursesService.getCourseById(id).subscribe(course => {
         if (course) {
-          this.form = {...course, authors: course.authors ? course.authors.join('; ') : ''}
+          this.form = {...course, authors: course.authors ? course.authors.map(a => a.name).join('; ') : ''}
         }
       })
     }
@@ -40,7 +40,10 @@ export class CourseEditorComponent implements OnInit {
   public onSubmit = (e: Event) => {
     const isNew = this.id === 'new'
 
-    const params = {...this.form, authors: this.form.authors && this.form.authors.split(';')} as CourseItem
+    const params = {
+      ...this.form,
+      authors: this.form.authors && this.form.authors.split(';').map(name => ({name})),
+    } as CourseItem
 
     if (isNew) {
       this.coursesService.createCourse(params)

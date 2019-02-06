@@ -4,13 +4,15 @@
   "description": "",
   "scripts": {
     "start": "node server.js",
-    "heroku:build": "cp -a ../../dist/. ./dist/",
+    "heroku:build": "cp -a ../../dist/. ./public/",
     "heroku:deploy": "git add . && git commit -m 'update build' && git push https://git.heroku.com/angular-mentoring-course-app.git master --force"
   },
   "author": "",
   "license": "ISC",
   "private": true,
   "dependencies": {
-    "express": "4.15.4"
+    "express": "4.15.4",
+    "json-server": "0.9.4",
+    "lodash": "4.17.11"
   }
 }

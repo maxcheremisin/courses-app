@@ -2,7 +2,7 @@ import {TestBed, ComponentFixture, ComponentFixtureAutoDetect, async} from '@ang
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core'
 import {CourseItem} from 'types/course-item.types'
 import {CoursesPageComponent} from './courses-page.component'
-import {CoursesService} from '../courses.service'
+import {CoursesService} from '../../../services/courses.service'
 
 const coursesMock: CourseItem[] = [
   {

@@ -1,7 +1,7 @@
 import {Component, OnInit, Input, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core'
 import {CourseItem} from 'types/course-item.types'
 import {iconType} from 'components/icon/icon-type.enum'
-import {CoursesService} from '../../courses.service'
+import {CoursesService} from 'services/courses.service'
 import {Router} from '@angular/router'
 
 @Component({
@@ -20,7 +20,7 @@ export class CourseItemComponent implements OnInit {
   public courseItem: CourseItem
 
   public onItemClick: (e: Event, id: number) => void = (e, id) => {
-    this.courseService.getCourseById(id).then(course => course && console.log(`on ${course.caption} click`))
+    this.courseService.getCourseById(id).subscribe(course => course && console.log(`on ${course.caption} click`))
   }
 
   public onRemoveItem = (e: Event) => {
@@ -31,9 +31,13 @@ export class CourseItemComponent implements OnInit {
     }
   }
 
+  public getAuthors() {
+    return this.courseItem.authors ? this.courseItem.authors.map(a => a.name).join(', ') : '-'
+  }
+
   public toggleFavorite = (e: Event) => {
     e.stopPropagation()
-    this.courseService.updateCourse(this.courseItem.id, {favorite: !this.courseItem.favorite})
+    this.courseService.updateCourse(this.courseItem.id, {isTopRated: !this.courseItem.isTopRated})
   }
 
   public openModal = () => {

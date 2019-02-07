@@ -22,6 +22,6 @@ export class PageHeaderComponent {
   }
 
   public openModal = () => {
-    this.router.navigate([{outlets: {modal: 'course/new'}}])
+    this.router.navigate([{outlets: {modal: 'course-edit/new'}}])
   }
 }

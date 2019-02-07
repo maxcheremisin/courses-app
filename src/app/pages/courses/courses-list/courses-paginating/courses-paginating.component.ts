@@ -3,10 +3,10 @@ import {CourseItem} from 'types/course-item.types'
 
 @Component({
   selector: 'app-courses-list',
-  styleUrls: ['courses-list.component.less'],
-  templateUrl: './courses-list.component.html',
+  styleUrls: ['courses-paginating.component.less'],
+  templateUrl: './courses-paginating.component.html',
 })
-export class CoursesListComponent implements OnInit {
+export class CoursesPaginatingComponent implements OnInit {
   constructor() {}
 
   @Input()

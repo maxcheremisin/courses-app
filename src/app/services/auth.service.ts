@@ -9,6 +9,7 @@ const CLIENT_ID = 'SEfVOUZ18dFs6dnbPsyUKzVQyq7YQ6Xv'
 export class AuthService {
   protected _auth0Client: WebAuth
   private _accessToken?: string
+  private isInitialized = false
   private userInfo?: Auth0DecodedHash['idTokenPayload']
   public authenticationInProgress = false
   private readonly _properties: AuthOptions
@@ -28,18 +29,29 @@ export class AuthService {
   public checkSession() {
     this.authenticationInProgress = true
 
-    this._auth0Client.checkSession({prompt: 'none'}, async (error, authResult) => {
-      try {
-        const parsedData = error ? await this.parseHash() : authResult
+    return new Promise<void>((resolve, reject) => {
+      this._auth0Client.checkSession({prompt: 'none'}, async (error, authResult) => {
+        try {
+          const parsedData = error ? await this.parseHash() : authResult
 
-        if (parsedData) {
-          this._setSession(parsedData)
+          if (parsedData) {
+            this._setSession(parsedData)
+          } else {
+            this.storageAuth = false
+          }
+        } catch (err) {
+          console.error(err)
+          this.storageAuth = false
+          await reject()
         }
-      } catch (err) {
-        console.error(err)
-      }
 
-      this.authenticationInProgress = false
+        this.authenticationInProgress = false
+        this.isInitialized = true
+        if (this.isAuthenticated() && this.router.isActive('/login', false)) {
+          this.router.navigateByUrl('')
+        }
+        await resolve()
+      })
     })
   }
 
@@ -55,14 +67,30 @@ export class AuthService {
     })
   }
 
+  private get storageAuth() {
+    return localStorage.getItem('isAuthenticated') === 'success'
+  }
+
+  private set storageAuth(value: boolean) {
+    if (value) {
+      localStorage.setItem('isAuthenticated', 'success')
+    } else {
+      localStorage.removeItem('isAuthenticated')
+      this.router.navigateByUrl('/login')
+    }
+  }
+
   public isAuthenticated() {
+    if (!this.isInitialized) {
+      return this.storageAuth
+    }
     return !!this._accessToken
   }
 
   private _setSession(authResult: Auth0DecodedHash) {
     this._accessToken = authResult.accessToken
     this.userInfo = authResult.idTokenPayload
-    this.router.navigateByUrl('')
+    this.storageAuth = true
   }
 
   public getUserInfo() {

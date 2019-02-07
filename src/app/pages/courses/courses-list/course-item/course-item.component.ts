@@ -19,8 +19,8 @@ export class CourseItemComponent implements OnInit {
   @Input()
   public courseItem: CourseItem
 
-  public onItemClick: (e: Event, id: number) => void = (e, id) => {
-    this.courseService.getCourseById(id).subscribe(course => course && console.log(`on ${course.caption} click`))
+  public getLink() {
+    return `course/${this.courseItem.id}`
   }
 
   public onRemoveItem = (e: Event) => {
@@ -41,7 +41,7 @@ export class CourseItemComponent implements OnInit {
   }
 
   public openModal = () => {
-    this.router.navigate([{outlets: {modal: `course/${this.courseItem.id}`}}])
+    this.router.navigate([{outlets: {modal: `course-edit/${this.courseItem.id}`}}])
   }
 
   ngOnInit() {}

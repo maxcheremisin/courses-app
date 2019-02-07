@@ -32,6 +32,7 @@ export class ButtonComponent {
 
   public handleClick(e: Event) {
     e.stopPropagation()
+    e.preventDefault()
 
     if (this.onClick) {
       this.onClick(e)

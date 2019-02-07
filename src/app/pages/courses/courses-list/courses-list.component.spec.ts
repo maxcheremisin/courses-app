@@ -1,7 +1,7 @@
 import {TestBed, ComponentFixture, ComponentFixtureAutoDetect, async} from '@angular/core/testing'
 import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core'
 import {CourseItem} from 'types/course-item.types'
-import {CoursesPageComponent} from './courses-page.component'
+import {CoursesListComponent} from './courses-list.component'
 import {CoursesService} from '../../../services/courses.service'
 
 const coursesMock: CourseItem[] = [
@@ -24,8 +24,8 @@ const coursesMock: CourseItem[] = [
 ]
 
 describe('CoursesPageComponent', () => {
-  let fixture: ComponentFixture<CoursesPageComponent>
-  let component: CoursesPageComponent
+  let fixture: ComponentFixture<CoursesListComponent>
+  let component: CoursesListComponent
   let courseService: Partial<CoursesService>
 
   beforeEach(() => {
@@ -36,14 +36,14 @@ describe('CoursesPageComponent', () => {
     }
 
     TestBed.configureTestingModule({
-      declarations: [CoursesPageComponent],
+      declarations: [CoursesListComponent],
       providers: [{provide: ComponentFixtureAutoDetect, useValue: true}, {provide: CoursesService, useValue: courseService}],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
     })
   })
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CoursesPageComponent)
+    fixture = TestBed.createComponent(CoursesListComponent)
     component = fixture.debugElement.componentInstance
   })
 

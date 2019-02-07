@@ -4,9 +4,9 @@ import {CoursesService} from 'services/courses.service'
 
 @Component({
   selector: 'app-courses-page',
-  templateUrl: './courses-page.component.html',
+  templateUrl: './courses-list.component.html',
 })
-export class CoursesPageComponent implements OnInit {
+export class CoursesListComponent implements OnInit {
   constructor(private courseService: CoursesService) {}
 
   public courses: CourseItem[] = []

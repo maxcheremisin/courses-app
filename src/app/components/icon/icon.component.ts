@@ -21,6 +21,8 @@ export class IconComponent {
   public onClick?: (e: Event) => void
 
   public handleClick(e: Event) {
+    e.preventDefault()
+
     if (this.onClick) {
       this.onClick(e)
     }

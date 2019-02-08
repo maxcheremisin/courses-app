@@ -18,6 +18,7 @@ export class CourseEditorComponent implements OnInit {
   }
 
   public id: 'new' | number
+  public prevCaption = ''
 
   public form: Partial<Omit<CourseItem, 'authors'> & {authors: string}> = {
     date: this.datePipe.transform(new Date(), 'yyyy-MM-dd')!,
@@ -31,6 +32,7 @@ export class CourseEditorComponent implements OnInit {
 
       this.coursesService.getCourseById(id).subscribe(course => {
         if (course) {
+          this.prevCaption = course.caption
           this.form = {...course, authors: course.authors ? course.authors.map(a => a.name).join('; ') : ''}
         }
       })
@@ -51,5 +53,9 @@ export class CourseEditorComponent implements OnInit {
       const id = Number(this.id)
       this.coursesService.updateCourse(id, params)
     }
+  }
+
+  public getHeader() {
+    return this.id === 'new' ? 'Add course' : `Edit "${this.prevCaption.toUpperCase()}"`
   }
 }

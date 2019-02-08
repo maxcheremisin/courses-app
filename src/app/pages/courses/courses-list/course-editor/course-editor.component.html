@@ -1,4 +1,4 @@
-<app-modal header="Add course" (submit)="onSubmit($event)">
+<app-modal [header]="getHeader()" (submit)="onSubmit($event)">
   <form class="editor__grid">
     <app-input
       label="Title"

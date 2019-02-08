@@ -46,7 +46,7 @@ class Api<T> {
 
 declare class CoursesServiceInterface {
   public courseUpdater: EventEmitter<CourseItem[]>
-  public createCourse(params: CourseUpdateParams): Promise<void>
+  public createCourse(params: CourseUpdateParams): void
   public getCourseById(id: number): Observable<CourseItem | undefined>
   public removeCourse(course: CourseItem): Promise<void>
   public updateCourse(id: number, params: CourseUpdateParams): Promise<void>
@@ -63,11 +63,11 @@ export class CoursesService implements CoursesServiceInterface {
   public courseUpdater = new EventEmitter<CourseItem[]>()
   // protected courseEmitter = () => this.courseUpdater.emit(this.courseList)
 
-  public async createCourse(params: CourseCreateParams) {
-    // const course: CourseItem = {
-    //   id: this.courseList.length + 1,
-    //   ...params,
-    // }
+  public createCourse(data: CourseCreateParams) {
+    const course: CourseItem = {
+      id: 1,
+      ...data,
+    }
     // this.courseList = [...this.courseList, course]
     // this.courseEmitter()
   }

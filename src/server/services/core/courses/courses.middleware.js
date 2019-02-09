@@ -12,13 +12,13 @@ module.exports = server => {
       queryStr = query.query,
       courses = server.db.getState().courses
 
-    if (!!query.textFragment) {
+    if (!!query.searchText) {
       courses = courses.filter(
         course =>
-          course.name
-            .concat(course.description)
+          (course.caption || '')
+            .concat(course.description || '')
             .toUpperCase()
-            .indexOf(query.textFragment.toUpperCase()) >= 0,
+            .indexOf(query.searchText.toUpperCase()) >= 0,
       )
     }
 

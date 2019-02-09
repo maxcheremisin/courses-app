@@ -2,7 +2,7 @@ import {Component, OnInit, ViewEncapsulation} from '@angular/core'
 import {ActivatedRoute} from '@angular/router'
 import {DatePipe} from '@angular/common'
 import {CourseItem} from 'types/course-item.types'
-import {CoursesService} from '../../../../services/courses.service'
+import {CoursesService} from 'services/courses.service'
 
 @Component({
   selector: 'app-course-editor',
@@ -30,9 +30,9 @@ export class CourseEditorComponent implements OnInit {
     if (!isNew) {
       const id = Number(this.id)
 
-      this.coursesService.getCourseById(id).subscribe(course => {
+      this.coursesService.getCourseById(id).then(course => {
         if (course) {
-          this.prevCaption = course.caption
+          this.prevCaption = course.caption || ''
           this.form = {...course, authors: course.authors ? course.authors.map(a => a.name).join('; ') : ''}
         }
       })
@@ -50,12 +50,11 @@ export class CourseEditorComponent implements OnInit {
     if (isNew) {
       this.coursesService.createCourse(params)
     } else {
-      const id = Number(this.id)
-      this.coursesService.updateCourse(id, params)
+      this.coursesService.updateCourse(params)
     }
   }
 
   public getHeader() {
-    return this.id === 'new' ? 'Add course' : `Edit "${this.prevCaption.toUpperCase()}"`
+    return this.id === 'new' ? 'Add course' : `Edit ${this.prevCaption.toUpperCase()}`
   }
 }

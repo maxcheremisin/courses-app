@@ -1,14 +1,26 @@
 import {EventEmitter, Injectable} from '@angular/core'
 import {CourseItem} from 'types/course-item.types'
 import {HttpClient} from '@angular/common/http'
-import {Observable} from 'rxjs'
-
-type CourseSearchParams = [CourseItem, string]
-type CourseCreateParams = Pick<CourseItem, Exclude<keyof CourseItem, 'id'>>
-type CourseUpdateParams = Partial<CourseCreateParams>
 
 interface Params {
   [p: string]: string | number
+}
+
+interface QueryParams {
+  [p: string]: string | string[]
+}
+
+interface RequestData<Req> {
+  params?: Params
+  query?: QueryParams
+  payload?: Req
+}
+
+enum Methods {
+  Post,
+  Get,
+  Put,
+  Delete,
 }
 
 class Api<T> {
@@ -16,9 +28,36 @@ class Api<T> {
 
   private readonly _baseUrl = `${window.location.origin}/api/`
 
-  private urlMap = {
+  private routeMap = {
     courses: 'courses',
     course: 'courses/:id',
+  }
+
+  private buildRequest = <Req, Res>(route: string, requestMethod: Methods, {params, query, payload}: RequestData<Req> = {}) => {
+    const url = this.resolveUrl(route, params)
+
+    switch (requestMethod) {
+      case Methods.Post:
+        return this.http.post<Res>(url, payload)
+      case Methods.Get:
+        return this.http.get<Res>(url, {params: query})
+      case Methods.Put:
+        return this.http.put<Res>(url, payload)
+      case Methods.Delete:
+        return this.http.delete<Res>(url)
+    }
+  }
+
+  private generateEndpoints<Req, Res = void>(route: string) {
+    const request = <Request, Response>(requestMethod: Methods) => (data?: RequestData<Request>) =>
+      this.buildRequest<Request, Response>(route, requestMethod, data).toPromise()
+
+    return {
+      post: request<Req, Res>(Methods.Post),
+      get: request<Req, Res>(Methods.Get),
+      put: request<Req, Res>(Methods.Put),
+      delete: request<Req, Res>(Methods.Delete),
+    }
   }
 
   private resolveUrl(url: string, params: Params = {}) {
@@ -33,24 +72,22 @@ class Api<T> {
     return Object.keys(params).reduce(replacer, url)
   }
 
-  public courses() {
-    const url = this.resolveUrl(this.urlMap.courses)
-    return this.http.get<T[]>(url)
+  public get courses() {
+    return this.generateEndpoints<T, T[]>(this.routeMap.courses)
   }
 
-  public course(params: Params) {
-    const url = this.resolveUrl(this.urlMap.course, params)
-    return this.http.get<T>(url)
+  public get course() {
+    return this.generateEndpoints<T, T>(this.routeMap.course)
   }
 }
 
 declare class CoursesServiceInterface {
-  public courseUpdater: EventEmitter<CourseItem[]>
-  public createCourse(params: CourseUpdateParams): void
-  public getCourseById(id: number): Observable<CourseItem | undefined>
-  public removeCourse(course: CourseItem): Promise<void>
-  public updateCourse(id: number, params: CourseUpdateParams): Promise<void>
-  public getCourses(query?: string): Observable<CourseItem[]>
+  public didUpdate: EventEmitter<true>
+  public createCourse(payload: CourseItem): void
+  public getCourseById(id: number): Promise<CourseItem | undefined>
+  public removeCourse(id: number): Promise<CourseItem>
+  public updateCourse(payload: CourseItem): void
+  public getCourses(query?: string): Promise<CourseItem[]>
 }
 
 @Injectable({providedIn: 'root'})
@@ -60,65 +97,31 @@ export class CoursesService implements CoursesServiceInterface {
   }
 
   private api: Api<CourseItem>
-  public courseUpdater = new EventEmitter<CourseItem[]>()
-  // protected courseEmitter = () => this.courseUpdater.emit(this.courseList)
 
-  public createCourse(data: CourseCreateParams) {
-    const course: CourseItem = {
-      id: 1,
-      ...data,
-    }
-    // this.courseList = [...this.courseList, course]
-    // this.courseEmitter()
+  public didUpdate = new EventEmitter<true>()
+
+  protected courseEmitter = <T>(res: T): T => (this.didUpdate.emit(true), res)
+
+  public createCourse(payload: CourseItem) {
+    this.api.courses.post({payload}).then(this.courseEmitter)
   }
 
   public getCourses(searchText?: string) {
-    // function isFoundByCaption(course: CourseItem, query: string) {
-    //   return course.caption && course.caption.toLowerCase().includes(query.toLowerCase())
-    // }
-    //
-    // function isFoundByDescription(course: CourseItem, query: string) {
-    //   return course.description && course.description.toLowerCase().includes(query.toLowerCase())
-    // }
-    //
-    // function isFoundByAuthors(course: CourseItem, query: string) {
-    //   return (
-    //     course.authors &&
-    //     course.authors
-    //       .join()
-    //       .toLowerCase()
-    //       .includes(query.toLowerCase())
-    //   )
-    // }
-    //
-    // function isFound(...args: CourseSearchParams) {
-    //   return isFoundByCaption(...args) || isFoundByDescription(...args) || isFoundByAuthors(...args)
-    // }
-
-    // if (!searchText) {
-    //   return this.courseList
-    // }
-
-    // return this.courseList.filter(course => isFound(course, searchText))
-    return this.api.courses()
+    if (!searchText) {
+      return this.api.courses.get()
+    }
+    return this.api.courses.get({query: {searchText}})
   }
 
   public getCourseById(id: number) {
-    return this.api.course({id})
+    return this.api.course.get({params: {id}})
   }
 
-  public async updateCourse(id: number, params: CourseUpdateParams) {
-    // let course = this.courseList.find(c => c.id === id)
-    // if (!course) {
-    //   return
-    // }
-    // course = {...course, ...params}
-    // this.courseList = [...this.courseList.filter(c => c.id !== id), {...course}]
-    // this.courseEmitter()
+  public updateCourse(payload: CourseItem) {
+    this.api.course.put({params: {id: payload.id}, payload}).then(this.courseEmitter)
   }
 
-  public async removeCourse(course: CourseItem) {
-    // this.courseList = this.courseList.filter(c => c !== course)
-    // this.courseEmitter()
+  public removeCourse(id: number) {
+    return this.api.course.delete({params: {id}}).then(this.courseEmitter)
   }
 }

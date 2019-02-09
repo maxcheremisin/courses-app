@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core'
+import {Component, Input, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core'
 import {CourseItem} from 'types/course-item.types'
 import {iconType} from 'components/icon/icon-type.enum'
 import {CoursesService} from 'services/courses.service'
@@ -11,7 +11,7 @@ import {Router} from '@angular/router'
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CourseItemComponent implements OnInit {
+export class CourseItemComponent {
   constructor(private courseService: CoursesService, private router: Router) {}
 
   public iconType = iconType
@@ -27,7 +27,7 @@ export class CourseItemComponent implements OnInit {
     const confirmation = confirm(`Are you sure you want to delete "${this.courseItem.caption}"?`)
 
     if (confirmation) {
-      this.courseService.removeCourse(this.courseItem)
+      this.courseService.removeCourse(this.courseItem.id)
     }
   }
 
@@ -37,12 +37,10 @@ export class CourseItemComponent implements OnInit {
 
   public toggleFavorite = (e: Event) => {
     e.stopPropagation()
-    this.courseService.updateCourse(this.courseItem.id, {isTopRated: !this.courseItem.isTopRated})
+    this.courseService.updateCourse({...this.courseItem, isTopRated: !this.courseItem.isTopRated})
   }
 
   public openModal = () => {
     this.router.navigate([{outlets: {modal: `course-edit/${this.courseItem.id}`}}])
   }
-
-  ngOnInit() {}
 }

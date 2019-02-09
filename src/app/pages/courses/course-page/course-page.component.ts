@@ -19,7 +19,7 @@ export class CoursePageComponent implements OnInit {
   public courseStub: string
 
   ngOnInit() {
-    this.coursesService.getCourseById(this.id).subscribe(course => {
+    this.coursesService.getCourseById(this.id).then(course => {
       this.courseStub = JSON.stringify(course)
     })
   }

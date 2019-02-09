@@ -12,15 +12,15 @@ export class CoursesListComponent implements OnInit {
   public courses: CourseItem[] = []
 
   public ngOnInit() {
-    // this.courseService.courseUpdater.subscribe((courses: CourseItem[]) => {
-    //   this.courses = courses
-    // })
+    this.courseService.didUpdate.subscribe(() => {
+      this.reload()
+    })
 
     this.reload()
   }
 
   public reload = (query?: string) => {
-    this.courseService.getCourses(query).subscribe(courses => {
+    this.courseService.getCourses(query).then(courses => {
       this.courses = courses
     })
   }

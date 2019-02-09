@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation, ChangeDetectionStrategy} from '@angular/core'
+import {Component, Input, ViewEncapsulation, ChangeDetectionStrategy, OnInit} from '@angular/core'
 import {CourseItem} from 'types/course-item.types'
 import {iconType} from 'components/icon/icon-type.enum'
 import {CoursesService} from 'services/courses.service'
@@ -11,13 +11,15 @@ import {Router} from '@angular/router'
   encapsulation: ViewEncapsulation.None,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CourseItemComponent {
+export class CourseItemComponent implements OnInit {
   constructor(private courseService: CoursesService, private router: Router) {}
 
   public iconType = iconType
 
   @Input()
   public courseItem: CourseItem
+
+  public isTopRated = false
 
   public getLink() {
     return `course/${this.courseItem.id}`
@@ -37,10 +39,15 @@ export class CourseItemComponent {
 
   public toggleFavorite = (e: Event) => {
     e.stopPropagation()
-    this.courseService.updateCourse({...this.courseItem, isTopRated: !this.courseItem.isTopRated})
+    this.isTopRated = !this.isTopRated
+    this.courseService.updateCourse({...this.courseItem, isTopRated: this.isTopRated})
   }
 
   public openModal = () => {
     this.router.navigate([{outlets: {modal: `course-edit/${this.courseItem.id}`}}])
+  }
+
+  ngOnInit() {
+    this.isTopRated = !!this.courseItem.isTopRated
   }
 }

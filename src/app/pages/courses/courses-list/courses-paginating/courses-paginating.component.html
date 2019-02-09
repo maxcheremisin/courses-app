@@ -1,8 +1,17 @@
 <div class="courses-list">
   <div *ngIf="coursesList.length">
-    <span class="courses-list__total">There are {{coursesList.length}} courses</span>
-    <app-course-item *ngFor="let course of coursesList | orderBy: 'date'" [courseItem]="course"></app-course-item>
-    <div>courses list paginating</div>
+    <span class="courses-list__total">There are {{totalItems}} courses</span>
+    <app-course-item
+      *ngFor="let course of coursesList"
+      [courseItem]="course"
+    ></app-course-item>
+    <app-button
+      *ngIf="coursesList.length < data.totalCount"
+      className="courses-list__load-button"
+      text="Load more"
+      [onClick]="onLoadMore"
+      [settings]="{textColor: 'grey'}"
+    ></app-button>
   </div>
   <div *ngIf="!coursesList.length" class="courses-list__no-data">
     No data

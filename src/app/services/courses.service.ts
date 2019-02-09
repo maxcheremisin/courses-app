@@ -1,27 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core'
-import {CourseItem} from 'types/course-item.types'
 import {HttpClient} from '@angular/common/http'
-
-interface Params {
-  [p: string]: string | number
-}
-
-interface QueryParams {
-  [p: string]: string | string[]
-}
-
-interface RequestData<Req> {
-  params?: Params
-  query?: QueryParams
-  payload?: Req
-}
-
-enum Methods {
-  Post,
-  Get,
-  Put,
-  Delete,
-}
+import {CourseItem, Methods, RequestData, Params, Page, QueryParams} from 'types/index'
 
 class Api<T> {
   constructor(private http: HttpClient) {}
@@ -73,7 +52,7 @@ class Api<T> {
   }
 
   public get courses() {
-    return this.generateEndpoints<T, T[]>(this.routeMap.courses)
+    return this.generateEndpoints<T, Page<T[]>>(this.routeMap.courses)
   }
 
   public get course() {
@@ -87,7 +66,7 @@ declare class CoursesServiceInterface {
   public getCourseById(id: number): Promise<CourseItem | undefined>
   public removeCourse(id: number): Promise<CourseItem>
   public updateCourse(payload: CourseItem): void
-  public getCourses(query?: string): Promise<CourseItem[]>
+  public getCourses(query?: QueryParams): Promise<Page<CourseItem[]>>
 }
 
 @Injectable({providedIn: 'root'})
@@ -106,11 +85,8 @@ export class CoursesService implements CoursesServiceInterface {
     this.api.courses.post({payload}).then(this.courseEmitter)
   }
 
-  public getCourses(searchText?: string) {
-    if (!searchText) {
-      return this.api.courses.get()
-    }
-    return this.api.courses.get({query: {searchText}})
+  public getCourses(query?: QueryParams) {
+    return this.api.courses.get({query})
   }
 
   public getCourseById(id: number) {

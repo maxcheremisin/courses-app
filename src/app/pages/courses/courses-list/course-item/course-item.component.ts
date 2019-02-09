@@ -1,5 +1,5 @@
 import {Component, Input, ViewEncapsulation, ChangeDetectionStrategy, OnInit} from '@angular/core'
-import {CourseItem} from 'types/course-item.types'
+import {CourseItem} from 'types/index'
 import {iconType} from 'components/icon/icon-type.enum'
 import {CoursesService} from 'services/courses.service'
 import {Router} from '@angular/router'

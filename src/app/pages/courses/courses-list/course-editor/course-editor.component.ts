@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core'
 import {ActivatedRoute} from '@angular/router'
 import {DatePipe} from '@angular/common'
-import {CourseItem} from 'types/course-item.types'
+import {CourseItem} from 'types/index'
 import {CoursesService} from 'services/courses.service'
 
 @Component({

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core'
-import {CourseItem} from 'types/course-item.types'
+import {CourseItem, Page, QueryParams} from 'types/index'
 import {CoursesService} from 'services/courses.service'
 
 @Component({
@@ -9,7 +9,7 @@ import {CoursesService} from 'services/courses.service'
 export class CoursesListComponent implements OnInit {
   constructor(private courseService: CoursesService) {}
 
-  public courses: CourseItem[] = []
+  public data: Page<CourseItem[]>
 
   public ngOnInit() {
     this.courseService.didUpdate.subscribe(() => {
@@ -19,13 +19,13 @@ export class CoursesListComponent implements OnInit {
     this.reload()
   }
 
-  public reload = (query?: string) => {
-    this.courseService.getCourses(query).then(courses => {
-      this.courses = courses
+  public reload = (query?: QueryParams) => {
+    this.courseService.getCourses(query).then(data => {
+      this.data = data
     })
   }
 
-  public onCourseSearch(query: string) {
-    this.reload(query)
+  public onCourseSearch(searchText: string) {
+    this.reload({searchText})
   }
 }

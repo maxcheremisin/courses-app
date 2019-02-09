@@ -1,19 +1,23 @@
 const express = require('express')
 const router = express.Router()
 const url = require('url')
+const sort = require('../../../utils/sort')
 
 module.exports = server => {
-  router.get('/courses', (req, res, next) => {
-    let url_parts = url.parse(req.originalUrl, true),
-      query = url_parts.query,
-      from = query.start || 0,
-      to = +query.start + +query.count,
-      sort = query.sort,
-      queryStr = query.query,
-      courses = server.db.getState().courses
+  router.get('/courses', (req, res) => {
+    const requestUrl = url.parse(req.originalUrl, true)
+    const query = requestUrl.query
+
+    const courses = server.db.getState().courses
+    const page = +query.page || 0
+    const fromPage = +(query.fromPage || page)
+    const itemsPerPage = +query.itemsPerPage || 5
+    const sortBy = query.sortBy || 'date'
+
+    let content = sort(courses, sortBy)
 
     if (!!query.searchText) {
-      courses = courses.filter(
+      content = courses.filter(
         course =>
           (course.caption || '')
             .concat(course.description || '')
@@ -22,12 +26,21 @@ module.exports = server => {
       )
     }
 
-    if (courses.length < to || !to) {
-      to = courses.length
-    }
-    courses = courses.slice(from, to)
+    const from = fromPage * itemsPerPage
+    const to = itemsPerPage * page + itemsPerPage
+    const totalCount = content.length
+    const totalPages = Math.ceil(totalCount / itemsPerPage)
 
-    res.json(courses)
+    content = content.slice(from, to)
+
+    res.json({
+      content: content,
+      totalCount: totalCount,
+      itemsPerPage: itemsPerPage,
+      page: page,
+      fromPage: fromPage,
+      totalPages: totalPages,
+    })
   })
 
   return router

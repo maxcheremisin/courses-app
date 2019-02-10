@@ -5,13 +5,10 @@
       *ngFor="let course of coursesList"
       [courseItem]="course"
     ></app-course-item>
-    <app-button
-      *ngIf="coursesList.length < data.totalCount"
-      className="courses-list__load-button"
-      text="Load more"
-      [onClick]="onLoadMore"
-      [settings]="{textColor: 'grey'}"
-    ></app-button>
+    <app-pagination
+      [load]="onLoadPage"
+      [data]="data"
+    ></app-pagination>
   </div>
   <div *ngIf="!coursesList.length" class="courses-list__no-data">
     No data

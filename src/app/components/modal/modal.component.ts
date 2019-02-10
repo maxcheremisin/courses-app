@@ -1,7 +1,6 @@
 import {Component, ElementRef, Input, OnInit, ViewEncapsulation, Output, EventEmitter, OnDestroy} from '@angular/core'
 import {iconType} from 'components/icon/icon-type.enum'
 import {Router} from '@angular/router'
-import {AuthService} from 'services/auth.service'
 
 @Component({
   selector: 'app-modal',

@@ -11,7 +11,7 @@ module.exports = server => {
     const courses = server.db.getState().courses
     const page = +query.page || 0
     const fromPage = +(query.fromPage || page)
-    const itemsPerPage = +query.itemsPerPage || 5
+    const pageSize = +query.pageSize || 5
     const sortBy = query.sortBy || 'date'
 
     let content = sort(courses, sortBy)
@@ -26,17 +26,17 @@ module.exports = server => {
       )
     }
 
-    const from = fromPage * itemsPerPage
-    const to = itemsPerPage * page + itemsPerPage
+    const from = fromPage * pageSize
+    const to = pageSize * page + pageSize
     const totalCount = content.length
-    const totalPages = Math.ceil(totalCount / itemsPerPage)
+    const totalPages = Math.ceil(totalCount / pageSize)
 
     content = content.slice(from, to)
 
     res.json({
       content: content,
       totalCount: totalCount,
-      itemsPerPage: itemsPerPage,
+      pageSize: pageSize,
       page: page,
       fromPage: fromPage,
       totalPages: totalPages,

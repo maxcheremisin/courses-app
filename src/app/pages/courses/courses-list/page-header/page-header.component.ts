@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Output, ViewEncapsulation} from '@angular/core'
 import {Router} from '@angular/router'
 import {iconType} from 'components/icon/icon-type.enum'
-import {CoursesService} from '../../../../services/courses.service'
+import {CoursesService} from 'services/courses.service'
 
 @Component({
   selector: 'app-page-header',

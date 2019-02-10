@@ -10,17 +10,27 @@ export class CoursesListComponent implements OnInit {
   constructor(private courseService: CoursesService) {}
 
   public data: Page<CourseItem[]>
+  public coursesList: CourseItem[] = []
 
   public ngOnInit() {
-    this.courseService.didUpdate.subscribe(() => {
-      this.reload()
+    this.courseService.didUpdate.subscribe((isUpdated: boolean) => {
+      if (isUpdated) {
+        this.reload()
+      }
     })
 
     this.reload()
   }
 
-  public reload = (query?: QueryParams) => {
+  public reload = (query?: QueryParams, isInfiniteScroll = false) => {
     this.courseService.getCourses(query).then(data => {
+      if (isInfiniteScroll) {
+        // items caching
+        this.coursesList = this.coursesList.concat(data.content)
+      } else {
+        this.coursesList = data.content
+      }
+
       this.data = data
     })
   }

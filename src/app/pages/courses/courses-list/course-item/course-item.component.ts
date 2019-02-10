@@ -40,7 +40,7 @@ export class CourseItemComponent implements OnInit {
   public toggleFavorite = (e: Event) => {
     e.stopPropagation()
     this.isTopRated = !this.isTopRated
-    this.courseService.updateCourse({...this.courseItem, isTopRated: this.isTopRated})
+    this.courseService.updateCourse({...this.courseItem, isTopRated: this.isTopRated}, false)
   }
 
   public openModal = () => {

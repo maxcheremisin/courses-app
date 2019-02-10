@@ -61,7 +61,7 @@ class Api<T> {
 }
 
 declare class CoursesServiceInterface {
-  public didUpdate: EventEmitter<true>
+  public didUpdate: EventEmitter<boolean>
   public createCourse(payload: CourseItem): void
   public getCourseById(id: number): Promise<CourseItem | undefined>
   public removeCourse(id: number): Promise<CourseItem>
@@ -77,9 +77,9 @@ export class CoursesService implements CoursesServiceInterface {
 
   private api: Api<CourseItem>
 
-  public didUpdate = new EventEmitter<true>()
+  public didUpdate = new EventEmitter<boolean>()
 
-  protected courseEmitter = <T>(res: T): T => (this.didUpdate.emit(true), res)
+  protected courseEmitter = <T>(res: T, isUpdated = true): T => (this.didUpdate.emit(isUpdated), res)
 
   public createCourse(payload: CourseItem) {
     this.api.courses.post({payload}).then(this.courseEmitter)
@@ -93,8 +93,8 @@ export class CoursesService implements CoursesServiceInterface {
     return this.api.course.get({params: {id}})
   }
 
-  public updateCourse(payload: CourseItem) {
-    this.api.course.put({params: {id: payload.id}, payload}).then(this.courseEmitter)
+  public updateCourse(payload: CourseItem, doUpdate = true) {
+    this.api.course.put({params: {id: payload.id}, payload}).then(res => this.courseEmitter(res, doUpdate))
   }
 
   public removeCourse(id: number) {

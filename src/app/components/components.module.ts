@@ -12,6 +12,7 @@ import {ModalComponent} from './modal/modal.component'
 import {InputComponent} from './input/input.component'
 import {LoaderComponent} from './loader/loader.component'
 import {FormsModule} from '@angular/forms'
+import {PaginationComponent} from './pagination/pagination.component'
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import {FormsModule} from '@angular/forms'
     ModalComponent,
     InputComponent,
     LoaderComponent,
+    PaginationComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [
@@ -37,6 +39,7 @@ import {FormsModule} from '@angular/forms'
     ModalComponent,
     InputComponent,
     LoaderComponent,
+    PaginationComponent,
   ],
 })
 export class ComponentsModule {}

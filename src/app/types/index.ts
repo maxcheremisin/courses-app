@@ -30,7 +30,7 @@ export interface RequestData<Req> {
 export interface Page<T> {
   content: T,
   totalCount: number,
-  itemsPerPage: number,
+  pageSize: number,
   page: number,
   fromPage: number,
   totalPages: number,

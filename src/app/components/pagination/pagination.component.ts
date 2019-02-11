@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, ViewEncapsulation} from '@angular/core'
-import {Page} from 'types/index'
+import {Option, Page} from 'types/index'
 
 @Component({
   selector: 'app-pagination',
@@ -9,6 +9,9 @@ import {Page} from 'types/index'
 })
 export class PaginationComponent<T> implements OnChanges {
   public pages: number[] = []
+
+  @Input()
+  public pageSize: {options: Option[], onChange(value: Option['value']): void}
 
   @Input()
   public data: Page<T>

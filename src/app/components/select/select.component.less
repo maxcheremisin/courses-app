@@ -1,0 +1,16 @@
+@import "mixins";
+
+.select {
+  &__label {
+    .label();
+    font-size: 1.4rem;
+    margin-right: 10px;
+  }
+
+  &__field {
+    .field();
+    height: 32px;
+    color: @grey;
+    border: 1px solid @grey;
+  }
+}

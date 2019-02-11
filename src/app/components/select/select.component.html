@@ -1,0 +1,10 @@
+<label class="select">
+  <span *ngIf="label" class="select__label">{{label}}</span>
+  <select name="select" class="select__field" (change)="handleChange($event)">
+    <option
+      *ngFor="let option of options"
+      [value]="option.value"
+      [selected]="option.selected"
+    >{{option.name}}</option>
+  </select>
+</label>

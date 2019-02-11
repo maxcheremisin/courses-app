@@ -21,6 +21,10 @@ export interface QueryParams {
   [p: string]: string | string[]
 }
 
+export type QueryPageParams = {
+  [P in keyof Omit<Page<void>, 'content'>]: string
+}
+
 export interface RequestData<Req> {
   params?: Params
   query?: QueryParams
@@ -34,6 +38,7 @@ export interface Page<T> {
   page: number,
   fromPage: number,
   totalPages: number,
+  searchText: string,
 }
 
 export enum Methods {
@@ -41,4 +46,10 @@ export enum Methods {
   Get,
   Put,
   Delete,
+}
+
+export interface Option {
+  value: string | number
+  name: string
+  selected?: boolean
 }

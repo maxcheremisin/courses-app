@@ -13,12 +13,12 @@ export class PageHeaderComponent {
   constructor(private coursesService: CoursesService, private router: Router) {}
 
   @Output()
-  public search = new EventEmitter<string>()
+  public search = new EventEmitter<KeyboardEvent>()
 
   public iconType = iconType
 
   public onSearchHandler = (e: KeyboardEvent) => {
-    this.search.emit((e.target as HTMLInputElement).value)
+    this.search.emit(e)
   }
 
   public openModal = () => {

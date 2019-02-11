@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
-import {CourseItem, Methods, RequestData, Params, Page, QueryParams} from 'types/index'
+import {CourseItem, Methods, RequestData, Params, Page, QueryParams, QueryPageParams} from 'types/index'
 
 class Api<T> {
   constructor(private http: HttpClient) {}
@@ -62,6 +62,9 @@ class Api<T> {
 
 declare class CoursesServiceInterface {
   public didUpdate: EventEmitter<boolean>
+  public setPageState(state: Partial<QueryPageParams>): void
+  public getPageState(): QueryPageParams
+
   public createCourse(payload: CourseItem): void
   public getCourseById(id: number): Promise<CourseItem | undefined>
   public removeCourse(id: number): Promise<CourseItem>
@@ -73,11 +76,30 @@ declare class CoursesServiceInterface {
 export class CoursesService implements CoursesServiceInterface {
   constructor(private http: HttpClient) {
     this.api = new Api(http)
+
+    const pageState = localStorage.getItem('page-state')
+    this.pageState = pageState ? JSON.parse(pageState) : {pageSize: '6'}
   }
 
   private api: Api<CourseItem>
 
   public didUpdate = new EventEmitter<boolean>()
+
+  private pageState: QueryPageParams
+
+  public setPageState(state: Partial<QueryPageParams>) {
+    this.pageState = {...this.pageState, ...state}
+    localStorage.setItem('page-state', JSON.stringify(this.stateToStorage(this.pageState)))
+  }
+
+  public getPageState() {
+    return this.pageState
+  }
+
+  private stateToStorage(state: QueryPageParams) {
+    const {searchText, ...toStorage} = state
+    return toStorage
+  }
 
   protected courseEmitter = <T>(res: T, isUpdated = true): T => (this.didUpdate.emit(isUpdated), res)
 
@@ -86,7 +108,7 @@ export class CoursesService implements CoursesServiceInterface {
   }
 
   public getCourses(query?: QueryParams) {
-    return this.api.courses.get({query})
+    return this.api.courses.get({query: {...this.pageState, ...query}})
   }
 
   public getCourseById(id: number) {

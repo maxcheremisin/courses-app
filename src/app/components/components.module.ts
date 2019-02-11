@@ -13,6 +13,7 @@ import {InputComponent} from './input/input.component'
 import {LoaderComponent} from './loader/loader.component'
 import {FormsModule} from '@angular/forms'
 import {PaginationComponent} from './pagination/pagination.component'
+import {SelectComponent} from './select/select.component'
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import {PaginationComponent} from './pagination/pagination.component'
     InputComponent,
     LoaderComponent,
     PaginationComponent,
+    SelectComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [
@@ -40,6 +42,7 @@ import {PaginationComponent} from './pagination/pagination.component'
     InputComponent,
     LoaderComponent,
     PaginationComponent,
+    SelectComponent,
   ],
 })
 export class ComponentsModule {}

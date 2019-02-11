@@ -1,5 +1,6 @@
 @import "common";
 @import "fonts";
+@import "mixins";
 
 .input {
   display: flex;
@@ -7,20 +8,11 @@
   position: relative;
 
   &__label {
-    color: @grey-dark;
-    font-family: @font-bold;
-    margin-bottom: 10px;
-    font-size: 1.6rem;
+    .label();
   }
 
   &__field {
-    min-height: 32px;;
-    border-radius: 3px;
-    border: 1px solid @grey-border;
-    padding: 5px 10px;
-    font-size: 1.4rem;
-    font-family: @font;
-    color: @grey-dark;
+    .field();
 
     &::placeholder {
       color: @grey-light;

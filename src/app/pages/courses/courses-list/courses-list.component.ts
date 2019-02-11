@@ -35,7 +35,9 @@ export class CoursesListComponent implements OnInit {
     })
   }
 
-  public onCourseSearch(searchText: string) {
-    this.reload({searchText})
+  public onCourseSearch(e: KeyboardEvent) {
+    const searchText = (e.target as HTMLInputElement).value
+    this.courseService.setPageState({searchText})
+    this.reload()
   }
 }

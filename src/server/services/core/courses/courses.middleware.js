@@ -13,16 +13,17 @@ module.exports = server => {
     const fromPage = +(query.fromPage || page)
     const pageSize = +query.pageSize || 5
     const sortBy = query.sortBy || 'date'
+    const searchText = query.searchText
 
     let content = sort(courses, sortBy)
 
-    if (!!query.searchText) {
+    if (!!searchText) {
       content = courses.filter(
         course =>
           (course.caption || '')
             .concat(course.description || '')
             .toUpperCase()
-            .indexOf(query.searchText.toUpperCase()) >= 0,
+            .indexOf(searchText.toUpperCase()) >= 0,
       )
     }
 
@@ -40,6 +41,7 @@ module.exports = server => {
       page: page,
       fromPage: fromPage,
       totalPages: totalPages,
+      searchText: searchText,
     })
   })
 

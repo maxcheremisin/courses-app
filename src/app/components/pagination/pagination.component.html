@@ -6,26 +6,33 @@
     (onClick)="load(data.page + 1, true)"
     [settings]="{textColor: 'grey'}"
   ></app-button>
-  <div *ngIf="pages && pages.length" class="pagination__control">
-    <app-button
-      *ngIf="data.page !== 0"
-      [settings]="{textColor: 'grey'}"
-      (onClick)="load(data.page - 1)"
-      text="Previous"
-    ></app-button>
-    <ng-container *ngFor="let page of pages">
+  <div class="pagination__control">
+    <div *ngIf="pages && pages.length" class="pagination__pages">
       <app-button
-        *ngIf="isPageButtonVisible(page)"
-        [settings]="{textColor: 'grey', disabled: data.page === page}"
-        (onClick)="load(page)"
-        [text]="page + 1"
+        *ngIf="data.page !== 0"
+        [settings]="{textColor: 'grey'}"
+        (onClick)="load(data.page - 1)"
+        text="Previous"
       ></app-button>
-    </ng-container>
-    <app-button
-      *ngIf="data.page !== data.totalPages - 1"
-      [settings]="{textColor: 'grey'}"
-      (onClick)="load(data.page + 1)"
-      text="Next"
-    ></app-button>
+      <ng-container *ngFor="let page of pages">
+        <app-button
+          *ngIf="isPageButtonVisible(page)"
+          [settings]="{textColor: 'grey', disabled: data.page === page}"
+          (onClick)="load(page)"
+          [text]="page + 1"
+        ></app-button>
+      </ng-container>
+      <app-button
+        *ngIf="data.page !== data.totalPages - 1"
+        [settings]="{textColor: 'grey'}"
+        (onClick)="load(data.page + 1)"
+        text="Next"
+      ></app-button>
+    </div>
+    <app-select
+      label="Items Per Page"
+      (change)="pageSize.onChange($event)"
+      [options]="pageSize.options"
+    ></app-select>
   </div>
 </div>

@@ -5,16 +5,7 @@ import {Component} from '@angular/core'
   styleUrls: ['./loader.component.less'],
   template: `
     <div class="loader">
-      <div class="loader__spinner">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <app-spinner></app-spinner>
     </div>
   `,
 })

@@ -1,6 +1,7 @@
 import {EventEmitter, Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
 import {CourseItem, Methods, RequestData, Params, Page, QueryParams, QueryPageParams} from 'types/index'
+import {BlockerService} from 'services/blocker.service'
 
 class Api<T> {
   constructor(private http: HttpClient) {}
@@ -61,7 +62,7 @@ class Api<T> {
 }
 
 declare class CoursesServiceInterface {
-  public didUpdate: EventEmitter<boolean>
+  public didUpdate: EventEmitter<Promise<boolean>>
   public setPageState(state: Partial<QueryPageParams>): void
   public getPageState(): QueryPageParams
 
@@ -74,7 +75,9 @@ declare class CoursesServiceInterface {
 
 @Injectable({providedIn: 'root'})
 export class CoursesService implements CoursesServiceInterface {
-  constructor(private http: HttpClient) {
+  private static queue = Promise.resolve()
+
+  constructor(private http: HttpClient, private blocker: BlockerService) {
     this.api = new Api(http)
 
     const pageState = localStorage.getItem('page-state')
@@ -83,7 +86,7 @@ export class CoursesService implements CoursesServiceInterface {
 
   private api: Api<CourseItem>
 
-  public didUpdate = new EventEmitter<boolean>()
+  public didUpdate = new EventEmitter<Promise<boolean>>()
 
   private pageState: QueryPageParams
 
@@ -101,25 +104,64 @@ export class CoursesService implements CoursesServiceInterface {
     return toStorage
   }
 
-  protected courseEmitter = <T>(res: T, isUpdated = true): T => (this.didUpdate.emit(isUpdated), res)
-
-  public createCourse(payload: CourseItem) {
-    this.api.courses.post({payload}).then(this.courseEmitter)
+  private activateBlocker() {
+    this.blocker.isActivated = true
   }
 
-  public getCourses(query?: QueryParams) {
-    return this.api.courses.get({query: {...this.pageState, ...query}})
+  private deactivateBlocker() {
+    this.blocker.isActivated = false
   }
 
-  public getCourseById(id: number) {
-    return this.api.course.get({params: {id}})
+  protected courseEmitter = (isUpdated = true) => {
+    this.didUpdate.emit(CoursesService.queue.then(() => isUpdated))
   }
 
-  public updateCourse(payload: CourseItem, doUpdate = true) {
-    this.api.course.put({params: {id: payload.id}, payload}).then(res => this.courseEmitter(res, doUpdate))
+  public async createCourse(payload: CourseItem) {
+    this.activateBlocker()
+    await this.api.courses.post({payload})
+    this.courseEmitter()
+    this.deactivateBlocker()
   }
 
-  public removeCourse(id: number) {
-    return this.api.course.delete({params: {id}}).then(this.courseEmitter)
+  public async getCourses(query?: QueryParams, block = true) {
+    if (block) {
+      this.activateBlocker()
+    }
+
+    const response = await this.api.courses.get({query: {...this.pageState, ...query}})
+
+    this.deactivateBlocker()
+
+    return response
+  }
+
+  public async getCourseById(id: number) {
+    this.activateBlocker()
+
+    const response = await this.api.course.get({params: {id}})
+
+    this.deactivateBlocker()
+
+    return response
+  }
+
+  public async updateCourse(payload: CourseItem, doUpdate = true) {
+    if (doUpdate) {
+      this.activateBlocker()
+    }
+    await this.api.course.put({params: {id: payload.id}, payload})
+    this.courseEmitter(doUpdate)
+    this.deactivateBlocker()
+  }
+
+  public async removeCourse(id: number) {
+    this.activateBlocker()
+
+    const response = await this.api.course.delete({params: {id}})
+
+    this.courseEmitter()
+    this.deactivateBlocker()
+
+    return response
   }
 }

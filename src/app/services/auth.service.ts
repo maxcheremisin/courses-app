@@ -1,6 +1,7 @@
 import {Auth0DecodedHash, AuthOptions, WebAuth} from 'auth0-js'
 import {Injectable} from '@angular/core'
 import {Router} from '@angular/router'
+import {Observable} from 'rxjs'
 
 const AUTH_DOMAIN = 'mxch.auth0.com'
 const CLIENT_ID = 'SEfVOUZ18dFs6dnbPsyUKzVQyq7YQ6Xv'
@@ -25,6 +26,10 @@ export class AuthService {
     }
     this._auth0Client = new WebAuth({...this._properties})
   }
+
+  public getUserInfo = new Observable<Auth0DecodedHash['idTokenPayload']>(observer => {
+    observer.next(this.userInfo)
+  })
 
   public checkSession() {
     this.authenticationInProgress = true
@@ -91,12 +96,6 @@ export class AuthService {
     this._accessToken = authResult.accessToken
     this.userInfo = authResult.idTokenPayload
     this.storageAuth = true
-  }
-
-  public getUserInfo() {
-    if (this.userInfo) {
-      return this.userInfo
-    }
   }
 
   public login() {

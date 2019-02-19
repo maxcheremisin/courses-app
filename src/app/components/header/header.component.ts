@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core'
+import {Component, OnInit, ViewEncapsulation} from '@angular/core'
 import {AuthService} from 'services/auth.service'
 
 @Component({
@@ -7,18 +7,22 @@ import {AuthService} from 'services/auth.service'
   styleUrls: ['./header.component.less'],
   encapsulation: ViewEncapsulation.None,
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   constructor(private auth: AuthService) {}
+
+  public userInfo = {}
 
   public isAuthenticated() {
     return this.auth.isAuthenticated()
   }
 
-  public userInfo() {
-    return this.auth.getUserInfo()
-  }
-
   public onLogOut = () => {
     this.auth.logout()
+  }
+
+  public ngOnInit() {
+    this.auth.getUserInfo.subscribe(userInfo => {
+      this.userInfo = userInfo
+    })
   }
 }

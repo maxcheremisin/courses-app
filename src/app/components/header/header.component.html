@@ -3,7 +3,7 @@
     <app-logo></app-logo>
     <app-dropdown *ngIf="isAuthenticated()">
       <p class="header__dropdown__label">You are logged as</p>
-      <p class="header__dropdown__login">{{userInfo().name}}</p>
+      <p class="header__dropdown__login">{{userInfo.name}}</p>
       <app-button
         [onClick]="onLogOut"
         [className]="'header__dropdown__button'"

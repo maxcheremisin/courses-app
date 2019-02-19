@@ -17,7 +17,7 @@ export class CoursesPaginatingComponent implements OnChanges {
   public data: Page<CourseItem[]>
 
   @Input()
-  public reload: (query?: QueryParams, isInfiniteScroll?: boolean) => void
+  public reload: ({}?: {query?: QueryParams, isInfiniteScroll?: boolean}) => void
 
   @Input()
   public coursesList: CourseItem[] = []
@@ -26,7 +26,7 @@ export class CoursesPaginatingComponent implements OnChanges {
 
   public pageSizeOptions: Option[] = []
 
-  public onLoadPage = (page: number, isInfiniteScroll = false) => this.reload({page: String(page)}, isInfiniteScroll)
+  public onLoadPage = (page: number, isInfiniteScroll = false) => this.reload({query: {page: String(page)}, isInfiniteScroll})
 
   public onPageSizeChange = (value: Option['value']) => {
     this.courseService.setPageState({pageSize: String(value)})

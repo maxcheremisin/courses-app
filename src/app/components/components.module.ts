@@ -14,6 +14,8 @@ import {LoaderComponent} from './loader/loader.component'
 import {FormsModule} from '@angular/forms'
 import {PaginationComponent} from './pagination/pagination.component'
 import {SelectComponent} from './select/select.component'
+import {BlockerComponent} from './blocker/blocker.component'
+import {SpinnerComponent} from './spinner/spinner.component'
 
 @NgModule({
   declarations: [
@@ -29,6 +31,8 @@ import {SelectComponent} from './select/select.component'
     LoaderComponent,
     PaginationComponent,
     SelectComponent,
+    BlockerComponent,
+    SpinnerComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule],
   exports: [
@@ -43,6 +47,8 @@ import {SelectComponent} from './select/select.component'
     LoaderComponent,
     PaginationComponent,
     SelectComponent,
+    BlockerComponent,
+    SpinnerComponent,
   ],
 })
 export class ComponentsModule {}

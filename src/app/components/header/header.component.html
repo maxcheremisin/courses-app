@@ -1,7 +1,7 @@
 <header class="header">
   <div class="header__content">
     <app-logo></app-logo>
-    <app-dropdown *ngIf="isAuthenticated()">
+    <app-dropdown *ngIf="isAuthenticated">
       <p class="header__dropdown__label">You are logged as</p>
       <p class="header__dropdown__login">{{userInfo.name}}</p>
       <app-button

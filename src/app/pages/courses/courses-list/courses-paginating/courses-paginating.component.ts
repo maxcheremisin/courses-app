@@ -1,6 +1,5 @@
-import {Component, Input, OnChanges, ViewChild, ViewEncapsulation} from '@angular/core'
+import {Component, Input, OnChanges} from '@angular/core'
 import {CourseItem, Option, Page, QueryParams} from 'types/index'
-import {PaginationComponent} from 'components/pagination/pagination.component'
 import {CoursesService} from 'services/courses.service'
 
 @Component({
@@ -17,7 +16,7 @@ export class CoursesPaginatingComponent implements OnChanges {
   public data: Page<CourseItem[]>
 
   @Input()
-  public reload: ({}?: {query?: QueryParams, isInfiniteScroll?: boolean}) => void
+  public reload: (params?: {query?: QueryParams, isInfiniteScroll?: boolean}) => void
 
   @Input()
   public coursesList: CourseItem[] = []

@@ -1,6 +1,6 @@
 <app-blocker *ngIf="blocker.isActivated"></app-blocker>
 
-<div *ngIf="!auth.authenticationInProgress; else loading">
+<div *ngIf="!isLoading; else loading">
   <app-header></app-header>
   <router-outlet></router-outlet>
   <router-outlet name="modal"></router-outlet>

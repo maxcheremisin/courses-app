@@ -22,6 +22,7 @@
       "mocks/*": ["./app/mocks/*"],
       "components/*": ["./app/components/*"],
       "services/*": ["./app/services/*"],
+      "store/*": ["./app/store/*"],
       "utils/*": ["./app/utils/*"]
     }
   }

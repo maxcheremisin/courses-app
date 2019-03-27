@@ -1,7 +1,8 @@
 import {Auth0DecodedHash, AuthOptions, WebAuth} from 'auth0-js'
 import {Injectable} from '@angular/core'
 import {Router} from '@angular/router'
-import {Observable} from 'rxjs'
+import {Store} from '@ngrx/store'
+import {AppStore, AuthActions} from 'store/index'
 
 const AUTH_DOMAIN = 'mxch.auth0.com'
 const CLIENT_ID = 'SEfVOUZ18dFs6dnbPsyUKzVQyq7YQ6Xv'
@@ -9,13 +10,9 @@ const CLIENT_ID = 'SEfVOUZ18dFs6dnbPsyUKzVQyq7YQ6Xv'
 @Injectable({providedIn: 'root'})
 export class AuthService {
   protected _auth0Client: WebAuth
-  private _accessToken?: string
-  private isInitialized = false
-  private userInfo?: Auth0DecodedHash['idTokenPayload']
-  public authenticationInProgress = false
   private readonly _properties: AuthOptions
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private store: Store<AppStore>) {
     this._properties = {
       clientID: CLIENT_ID,
       domain: AUTH_DOMAIN,
@@ -24,38 +21,29 @@ export class AuthService {
       audience: `https://${AUTH_DOMAIN}/api/v2/`,
       scope: 'openid profile email',
     }
-    this._auth0Client = new WebAuth({...this._properties})
+    this._auth0Client = new WebAuth(this._properties)
   }
 
-  public getUserInfo = new Observable<Auth0DecodedHash['idTokenPayload']>(observer => {
-    observer.next(this.userInfo)
-  })
-
   public checkSession() {
-    this.authenticationInProgress = true
-
     return new Promise<void>((resolve, reject) => {
       this._auth0Client.checkSession({prompt: 'none'}, async (error, authResult) => {
         try {
           const parsedData = error ? await this.parseHash() : authResult
 
           if (parsedData) {
-            this._setSession(parsedData)
+            const userInfo = parsedData.idTokenPayload
+
+            this.store.dispatch(new AuthActions.LoginSuccess(userInfo))
+            await resolve()
           } else {
-            this.storageAuth = false
+            this.store.dispatch(new AuthActions.LoginFailure())
           }
         } catch (err) {
           console.error(err)
-          this.storageAuth = false
+
+          this.store.dispatch(new AuthActions.LoginFailure())
           await reject()
         }
-
-        this.authenticationInProgress = false
-        this.isInitialized = true
-        if (this.isAuthenticated() && this.router.isActive('/login', false)) {
-          this.router.navigateByUrl('')
-        }
-        await resolve()
       })
     })
   }
@@ -72,39 +60,11 @@ export class AuthService {
     })
   }
 
-  private get storageAuth() {
-    return localStorage.getItem('isAuthenticated') === 'success'
-  }
-
-  private set storageAuth(value: boolean) {
-    if (value) {
-      localStorage.setItem('isAuthenticated', 'success')
-    } else {
-      localStorage.removeItem('isAuthenticated')
-      this.router.navigateByUrl('/login')
-    }
-  }
-
-  public isAuthenticated() {
-    if (!this.isInitialized) {
-      return this.storageAuth
-    }
-    return !!this._accessToken
-  }
-
-  private _setSession(authResult: Auth0DecodedHash) {
-    this._accessToken = authResult.accessToken
-    this.userInfo = authResult.idTokenPayload
-    this.storageAuth = true
-  }
-
   public login() {
     this._auth0Client.authorize()
   }
 
   public logout() {
-    delete this._accessToken
-    delete this.userInfo
     this._auth0Client.logout({
       returnTo: `${window.location.origin}/login`,
     })

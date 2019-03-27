@@ -13,11 +13,9 @@ export class AuthEffects {
   loginSuccess = this.actions.pipe(
     ofType(AuthActions.AuthActionTypes.LoginSuccess),
     tap(() => {
-      this.store.select(s => s.auth.isAuthenticated).subscribe(isAuthenticated => {
-        if (isAuthenticated && this.router.isActive('/login', false)) {
-          this.router.navigateByUrl('')
-        }
-      })
+      if (this.router.isActive('/login', false)) {
+        this.router.navigateByUrl('')
+      }
     }),
   )
 

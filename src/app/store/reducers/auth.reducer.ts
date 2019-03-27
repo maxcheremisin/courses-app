@@ -2,7 +2,7 @@ import {AuthStore} from 'store/index'
 import {AuthActionTypes, AuthActionsUnion} from 'store/actions/auth.actions'
 
 const initialState: AuthStore = {
-  isAuthenticated: false,
+  isAuthenticated: true,
   isAuthenticationInProgress: false,
   userInfo: {},
 }

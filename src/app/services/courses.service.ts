@@ -1,6 +1,6 @@
 import {EventEmitter, Injectable} from '@angular/core'
 import {HttpClient} from '@angular/common/http'
-import {CourseItem, Methods, RequestData, Params, Page, QueryParams, QueryPageParams} from 'types/index'
+import {CourseItem, Methods, RequestData, Params, Page, QueryParams, QueryPageParams, Person} from 'types/index'
 import {BlockerService} from 'services/blocker.service'
 
 class Api<T> {
@@ -11,6 +11,7 @@ class Api<T> {
   private routeMap = {
     courses: 'courses',
     course: 'courses/:id',
+    authors: 'authors',
   }
 
   private buildRequest = <Req, Res>(route: string, requestMethod: Methods, {params, query, payload}: RequestData<Req> = {}) => {
@@ -58,6 +59,10 @@ class Api<T> {
 
   public get course() {
     return this.generateEndpoints<T, T>(this.routeMap.course)
+  }
+
+  public getAuthors(text: string) {
+    return this.http.get<Person[]>(this._baseUrl + this.routeMap.authors, {params: {searchText: text}})
   }
 }
 
@@ -163,5 +168,9 @@ export class CoursesService implements CoursesServiceInterface {
     this.deactivateBlocker()
 
     return response
+  }
+
+  public getAuthors(text: string) {
+    return this.api.getAuthors(text)
   }
 }

@@ -11,6 +11,9 @@ import {DurationPipe} from './duration.pipe'
 import {OrderByPipe} from './order-by.pipe'
 import {CourseEditorComponent} from './courses-list/course-editor/course-editor.component'
 import {CoursePageComponent} from './course-page/course-page.component'
+import {TagInputModule} from 'ngx-chips'
+import {FormsModule, ReactiveFormsModule} from '@angular/forms'
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations'
 
 @NgModule({
   declarations: [
@@ -24,7 +27,7 @@ import {CoursePageComponent} from './course-page/course-page.component'
     CourseEditorComponent,
     CoursePageComponent,
   ],
-  imports: [CommonModule, ComponentsModule, RouterModule],
+  imports: [CommonModule, ComponentsModule, RouterModule, TagInputModule, FormsModule, ReactiveFormsModule, BrowserAnimationsModule],
   exports: [CoursesListComponent, CoursePageComponent],
 })
 export class CoursesModule {}

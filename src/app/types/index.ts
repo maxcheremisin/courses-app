@@ -1,4 +1,4 @@
-interface Person {
+export interface Person {
   id: number
   name: string
 }
@@ -21,9 +21,7 @@ export interface QueryParams {
   [p: string]: string | string[]
 }
 
-export type QueryPageParams = {
-  [P in keyof Omit<Page<void>, 'content'>]: string
-}
+export type QueryPageParams = {[P in keyof Omit<Page<void>, 'content'>]: string}
 
 export interface RequestData<Req> {
   params?: Params
@@ -32,13 +30,13 @@ export interface RequestData<Req> {
 }
 
 export interface Page<T> {
-  content: T,
-  totalCount: number,
-  pageSize: number,
-  page: number,
-  fromPage: number,
-  totalPages: number,
-  searchText: string,
+  content: T
+  totalCount: number
+  pageSize: number
+  page: number
+  fromPage: number
+  totalPages: number
+  searchText: string
 }
 
 export enum Methods {

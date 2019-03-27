@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core'
 import {ActivatedRoute} from '@angular/router'
 import {DatePipe} from '@angular/common'
-import {CourseItem} from 'types/index'
+import {CourseItem, Person} from 'types/index'
 import {CoursesService} from 'services/courses.service'
 
 @Component({
@@ -20,8 +20,9 @@ export class CourseEditorComponent implements OnInit {
   public id: 'new' | number
   public prevCaption = ''
 
-  public form: Partial<Omit<CourseItem, 'authors'> & {authors: string}> = {
+  public form: Partial<CourseItem> = {
     date: this.datePipe.transform(new Date(), 'yyyy-MM-dd')!,
+    authors: [],
   }
 
   public ngOnInit() {
@@ -33,7 +34,7 @@ export class CourseEditorComponent implements OnInit {
       this.coursesService.getCourseById(id).then(course => {
         if (course) {
           this.prevCaption = course.caption || ''
-          this.form = {...course, authors: course.authors ? course.authors.map(a => a.name).join('; ') : ''}
+          this.form = {...course, authors: course.authors || []}
         }
       })
     }
@@ -41,11 +42,7 @@ export class CourseEditorComponent implements OnInit {
 
   public onSubmit = (e: Event) => {
     const isNew = this.id === 'new'
-
-    const params = {
-      ...this.form,
-      authors: this.form.authors && this.form.authors.split(';').map(name => ({name})),
-    } as CourseItem
+    const params = {...this.form} as CourseItem
 
     if (isNew) {
       this.coursesService.createCourse(params)
@@ -56,5 +53,9 @@ export class CourseEditorComponent implements OnInit {
 
   public getHeader() {
     return this.id === 'new' ? 'Add course' : `Edit ${this.prevCaption.toUpperCase()}`
+  }
+
+  public searchAuthors = (text: string) => {
+    return this.coursesService.getAuthors(text)
   }
 }

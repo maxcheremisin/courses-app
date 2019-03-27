@@ -1,5 +1,5 @@
 <app-modal [header]="getHeader()" (submit)="onSubmit($event)">
-  <form class="editor__grid">
+  <div class="editor__grid">
     <app-input
       label="Title"
       placeholder="Enter a name of course"
@@ -28,11 +28,23 @@
       [model]="form"
       field="duration"
     ></app-input>
-    <app-input
-      label="Authors"
-      placeholder="Enter authors separated by ';'"
-      [model]="form"
-      field="authors"
-    ></app-input>
-  </form>
+    <label class="authors">
+      <span class="authors__label">Authors</span>
+      <tag-input
+        class="authors__input"
+        [(ngModel)]="form.authors"
+        [onlyFromAutocomplete]="true"
+        displayBy="name"
+        secondaryPlaceholder="Enter authors"
+        placeholder="Enter authors"
+      >
+        <tag-input-dropdown
+          [autocompleteObservable]="searchAuthors"
+          displayBy="name"
+          identifyBy="id"
+        >
+        </tag-input-dropdown>
+      </tag-input>
+    </label>
+  </div>
 </app-modal>
